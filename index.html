@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PathWise AI | Nextara</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="ambient ambient-left"></div>
+    <div class="ambient ambient-right"></div>
+
+    <div class="site-shell">
+      <header class="topbar" id="home">
+        <div class="header-brand">
+          <div class="brand-cluster">
+            <div class="logo-chip logo-upm">UPM</div>
+            <div class="logo-chip logo-putra">PUTRA</div>
+            <div class="logo-chip logo-msu">MSU</div>
+          </div>
+          <div class="brand-text">
+            <strong>PathWise AI</strong>
+            <span>Hackathon demo for career guidance and wellbeing support</span>
+          </div>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="main-nav" id="mainNav">
+          <a href="#home">Home</a>
+          <a href="#problem">Features</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#impact">Resources</a>
+          <a href="#team">About Us</a>
+          <a href="#footer">Contact</a>
+        </nav>
+
+        <div class="topbar-actions">
+          <span class="header-pill">Nextara Demo</span>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+            <span class="theme-icon">◐</span>
+          </button>
+          <a class="login-btn" href="#team">Login / Sign Up</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero-grid section-anchor">
+          <div class="hero-panel">
+            <span class="eyebrow">AI-Powered Career &amp; Life Companion</span>
+            <h1>PathWise AI</h1>
+            <h2>Personalized Career &amp; Life Companion</h2>
+            <p class="hero-copy">
+              Reduce job-seeking stress, build confidence, and discover the right
+              career path with AI-powered interview coaching, resume building,
+              career recommendations, and wellbeing support.
+            </p>
+
+            <div class="hero-actions">
+              <a class="primary-btn" href="#interview-demo">Start Interview Coach</a>
+              <a class="secondary-btn" href="#resume-builder">Build Resume</a>
+              <a class="secondary-btn" href="#career-path">Find Career Path</a>
+            </div>
+
+            <div class="hero-meta">
+              <div class="meta-card">
+                <span class="meta-label">Team</span>
+                <strong>Nextara</strong>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label">Mentor</span>
+                <strong>Dr Hafizul Bin Othman</strong>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label">University</span>
+                <strong>Management and Science University (MSU)</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="floating-card card-interview">
+              <span class="float-icon">🎥</span>
+              <div>
+                <strong>Interview Coach</strong>
+              </div>
+            </div>
+            <div class="floating-card card-resume">
+              <span class="float-icon">📄</span>
+              <div>
+                <strong>Resume Builder</strong>
+              </div>
+            </div>
+            <div class="floating-card card-career">
+              <span class="float-icon">🎯</span>
+              <div>
+                <strong>Career Match</strong>
+              </div>
+            </div>
+            <div class="floating-card card-wellbeing">
+              <span class="float-icon">💜</span>
+              <div>
+                <strong>Wellbeing Support</strong>
+              </div>
+            </div>
+
+            <div class="scene">
+              <div class="scene-glow"></div>
+              <div class="character-card">
+                <div class="laptop"></div>
+                <div class="character">
+                  <div class="hair"></div>
+                  <div class="head"></div>
+                  <div class="body"></div>
+                  <div class="arm arm-left"></div>
+                  <div class="arm arm-right"></div>
+                </div>
+                <div class="coffee-cup"></div>
+                <div class="plant">
+                  <span class="leaf leaf-left"></span>
+                  <span class="leaf leaf-right"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card interview-demo" id="interview-demo">
+          <div class="section-title centered">
+            <h3>AI Interview Coaching - Live Demo</h3>
+            <p>3 AI Interviewers • Real-time Questions • Instant Feedback</p>
+          </div>
+
+          <div class="video-stage avatar-style-friendly" id="videoStage">
+            <div class="stage-topbar">
+              <div class="stage-status-group">
+                <span class="live-pill">LIVE</span>
+                <span class="stage-clock" id="stageClock">01:24</span>
+                <span class="call-mode-pill">AI Video Call Simulation</span>
+              </div>
+              <div class="device-status-row">
+                <span class="device-pill" id="cameraStatus">Camera Off</span>
+                <span class="device-pill" id="micStatus">Mic Ready</span>
+              </div>
+            </div>
+
+            <div class="stage-toolbar">
+              <div>
+                <span class="mini-label stage-label">Choose Interviewer</span>
+                <div class="speaker-grid">
+                  <button class="speaker-card" type="button" data-role="hr">
+                    <div class="speaker-avatar hr-avatar">
+                      <div class="avatar-shell">
+                        <div class="avatar-head"></div>
+                        <div class="avatar-hair"></div>
+                        <div class="avatar-eye avatar-eye-left"></div>
+                        <div class="avatar-eye avatar-eye-right"></div>
+                        <div class="avatar-body"></div>
+                        <div class="avatar-role-tag">HR</div>
+                      </div>
+                    </div>
+                    <div class="speaker-meta">
+                      <strong>HR AI</strong>
+                      <span>Behavioral Expert</span>
+                    </div>
+                  </button>
+
+                  <button class="speaker-card" type="button" data-role="technical">
+                    <div class="speaker-avatar technical-avatar">
+                      <div class="avatar-shell">
+                        <div class="avatar-head"></div>
+                        <div class="avatar-hair"></div>
+                        <div class="avatar-glasses"></div>
+                        <div class="avatar-eye avatar-eye-left"></div>
+                        <div class="avatar-eye avatar-eye-right"></div>
+                        <div class="avatar-body"></div>
+                        <div class="avatar-role-tag">TE</div>
+                      </div>
+                    </div>
+                    <div class="speaker-meta">
+                      <strong>Technical AI</strong>
+                      <span>Technical Expert</span>
+                    </div>
+                  </button>
+
+                  <button class="speaker-card active" type="button" data-role="manager">
+                    <div class="speaker-avatar manager-avatar">
+                      <div class="avatar-shell">
+                        <div class="avatar-head"></div>
+                        <div class="avatar-hair"></div>
+                        <div class="avatar-beard"></div>
+                        <div class="avatar-eye avatar-eye-left"></div>
+                        <div class="avatar-eye avatar-eye-right"></div>
+                        <div class="avatar-body"></div>
+                        <div class="avatar-role-tag">MG</div>
+                      </div>
+                    </div>
+                    <div class="speaker-meta">
+                      <strong>Manager AI</strong>
+                      <span>Management Expert</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="user-stage-card">
+                <div class="user-stage-head">
+                  <span class="mini-label stage-label">Your Camera Preview</span>
+                  <span class="camera-indicator" id="cameraIndicator">Offline</span>
+                </div>
+                <div class="user-video-wrap">
+                  <video id="userVideo" autoplay muted playsinline></video>
+                  <div class="user-video-placeholder" id="userVideoPlaceholder">
+                    <div class="user-video-avatar">You</div>
+                    <strong>Camera is off</strong>
+                    <span>Open camera for a realistic mock interview experience.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="call-config-bar">
+              <div class="avatar-style-picker">
+                <span class="mini-label stage-label">Avatar Style</span>
+                <div class="style-options">
+                  <button class="style-chip" type="button" data-avatar-style="professional">Professional</button>
+                  <button class="style-chip active" type="button" data-avatar-style="friendly">Friendly</button>
+                  <button class="style-chip" type="button" data-avatar-style="executive">Executive</button>
+                </div>
+              </div>
+
+              <div class="ai-response-box">
+                <span class="mini-label stage-label">Avatar Response</span>
+                <p id="aiResponseText">
+                  I am ready to start. Choose an interviewer, turn on your camera if
+                  you want, and begin the mock call.
+                </p>
+              </div>
+            </div>
+
+            <div class="stage-controls">
+              <button class="control-btn" id="startInterviewBtn" type="button">▶ Start Session</button>
+              <button class="control-btn" id="openCameraBtn" type="button">📷 Open Camera</button>
+              <button class="control-btn" id="closeCameraBtn" type="button">🚫 Close Camera</button>
+              <button class="control-btn" id="replayQuestionBtn" type="button">🔊 Replay Question</button>
+              <button class="control-btn" id="voiceAnswerBtn" type="button">🎙 Use Microphone</button>
+              <button class="control-btn danger-control" id="finishInterviewBtn" type="button">■ End &amp; Report</button>
+              <span class="session-status" id="sessionStatus">Ready to begin</span>
+            </div>
+          </div>
+
+          <div class="demo-panels">
+            <article class="mini-panel question-panel">
+              <span class="mini-label">Current Question (<span id="questionRoleLabel">Manager AI</span>)</span>
+              <p id="questionText">
+                Tell me about yourself and the kind of role you want to grow
+                into.
+              </p>
+              <div class="question-footer">
+                <span id="questionCounter">Question 1 of 4</span>
+                <button class="text-action" id="nextQuestionBtn" type="button">Load another question</button>
+              </div>
+            </article>
+
+            <article class="mini-panel answer-panel">
+              <label class="mini-label" for="answerInput">Your Answer</label>
+              <textarea
+                id="answerInput"
+                rows="5"
+                placeholder="Type your response here. Mention your actions, results, and what you learned."
+              ></textarea>
+              <div class="answer-actions">
+                <span class="timer-note" id="voiceSupportNote">Voice mode works best in Chromium-based browsers.</span>
+                <button class="primary-btn full-btn" id="submitAnswerBtn" type="button">
+                  Submit Answer
+                </button>
+              </div>
+            </article>
+
+            <article class="mini-panel feedback-panel">
+              <span class="mini-label">AI Feedback</span>
+              <div class="feedback-header">
+                <strong id="feedbackHeadline">Ready when you are</strong>
+                <span id="feedbackTone" class="feedback-tone neutral">Waiting for answer</span>
+              </div>
+
+              <div class="feedback-metric">
+                <span>Confidence</span>
+                <div class="metric-line">
+                  <div class="metric-fill" id="confidenceFill"></div>
+                </div>
+                <strong id="confidenceScore">0%</strong>
+              </div>
+
+              <div class="feedback-metric">
+                <span>Clarity</span>
+                <div class="metric-line">
+                  <div class="metric-fill" id="clarityFill"></div>
+                </div>
+                <strong id="clarityScore">0%</strong>
+              </div>
+
+              <div class="feedback-metric">
+                <span>Relevance</span>
+                <div class="metric-line">
+                  <div class="metric-fill" id="relevanceFill"></div>
+                </div>
+                <strong id="relevanceScore">0%</strong>
+              </div>
+
+              <p class="tip-box" id="feedbackTip">
+                Tip: Use a specific example and explain the result you achieved.
+              </p>
+            </article>
+          </div>
+
+          <article class="mini-panel report-panel hidden" id="sessionReport">
+            <div class="report-head">
+              <div>
+                <span class="mini-label">Interview Report</span>
+                <h4 id="reportRoleTitle">Technical AI Session Summary</h4>
+                <p id="reportVerdict">
+                  Complete a short voice or text interview to unlock the final
+                  strengths and improvement report.
+                </p>
+              </div>
+              <div class="report-score">
+                <span>Overall Score</span>
+                <strong id="reportOverallScore">--</strong>
+              </div>
+            </div>
+
+            <div class="report-grid">
+              <div class="report-card">
+                <strong>Pros</strong>
+                <ul class="bullet-list compact" id="reportPros"></ul>
+              </div>
+              <div class="report-card">
+                <strong>What to Improve</strong>
+                <ul class="bullet-list compact" id="reportCons"></ul>
+              </div>
+              <div class="report-card">
+                <strong>Next Steps</strong>
+                <ul class="bullet-list compact" id="reportNextSteps"></ul>
+              </div>
+            </div>
+
+            <div class="report-breakdown" id="reportBreakdown"></div>
+            <button class="secondary-btn" id="downloadReportBtn" type="button">Download Report</button>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="section-card problem-card section-anchor" id="problem">
+            <div class="section-title">
+              <h3>The Problem</h3>
+            </div>
+            <p>
+              Many youth and job seekers face stress, anxiety, and confusion
+              during job seeking and career development.
+            </p>
+            <ul class="bullet-list">
+              <li>Lack of interview practice</li>
+              <li>Weak or unprofessional resumes</li>
+              <li>Unclear career direction</li>
+              <li>High competition and expectations</li>
+              <li>No support for mental wellbeing</li>
+            </ul>
+            <p class="closing-note">
+              This leads to low confidence, poor performance, and inefficient job
+              searching.
+            </p>
+          </article>
+
+          <article class="section-card solution-card">
+            <div class="section-title">
+              <h3>Our Solutions</h3>
+            </div>
+
+            <div class="solution-columns">
+              <div class="solution-box">
+                <span class="solution-badge">1</span>
+                <h4>AI Interview Coaching</h4>
+                <p>Practice with 3 AI interviewers and get real-time feedback.</p>
+                <ul class="bullet-list compact">
+                  <li>HR AI - Behavioral &amp; Situational</li>
+                  <li>Technical AI - Skill Based</li>
+                  <li>Manager AI - Decision Making</li>
+                </ul>
+                <button class="text-action jump-btn" type="button" data-jump="#interview-demo">
+                  Try Interview Coach
+                </button>
+              </div>
+
+              <div class="solution-box">
+                <span class="solution-badge">2</span>
+                <h4>AI Career &amp; Resume System</h4>
+                <p>Build a professional resume and get personalized career recommendations.</p>
+                <ul class="bullet-list compact">
+                  <li>Resume Builder AI</li>
+                  <li>Career Recommendation</li>
+                  <li>Skill &amp; Interest Matching</li>
+                </ul>
+                <button class="text-action jump-btn" type="button" data-jump="#resume-builder">
+                  Explore Now
+                </button>
+              </div>
+            </div>
+
+            <div class="mini-highlight-grid">
+              <div class="mini-highlight">
+                <strong>3-role AI simulation</strong>
+                <span>HR, Technical, and Manager interview modes</span>
+              </div>
+              <div class="mini-highlight">
+                <strong>Resume Builder</strong>
+                <span>Create a polished profile preview instantly</span>
+              </div>
+              <div class="mini-highlight">
+                <strong>Career Match</strong>
+                <span>Match roles to skills, interests, and work style</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="section-card wellbeing-card" id="wellbeing">
+            <div class="section-title">
+              <h3>Wellbeing Support</h3>
+            </div>
+
+            <div class="wellbeing-layout">
+              <div>
+                <p class="wellbeing-question">How stressed are you feeling today?</p>
+                <div class="stress-selector" id="stressSelector">
+                  <button class="stress-btn" type="button" data-level="1">
+                    <span>🙂</span>
+                    <small>1</small>
+                  </button>
+                  <button class="stress-btn" type="button" data-level="2">
+                    <span>😊</span>
+                    <small>2</small>
+                  </button>
+                  <button class="stress-btn active" type="button" data-level="3">
+                    <span>😐</span>
+                    <small>3</small>
+                  </button>
+                  <button class="stress-btn" type="button" data-level="4">
+                    <span>😟</span>
+                    <small>4</small>
+                  </button>
+                  <button class="stress-btn" type="button" data-level="5">
+                    <span>😣</span>
+                    <small>5</small>
+                  </button>
+                </div>
+                <div class="stress-scale">
+                  <span>Very Calm</span>
+                  <span>Very Stressed</span>
+                </div>
+              </div>
+
+              <div class="wellbeing-advice">
+                <span class="mini-label">Your Wellbeing Advice</span>
+                <p id="wellbeingMessage">
+                  It is normal to feel this way sometimes. Take small breaks, stay
+                  positive, and focus on one step at a time.
+                </p>
+                <ul class="bullet-list compact" id="wellbeingTips">
+                  <li>Take short breaks and breathe</li>
+                  <li>Stay active and drink water</li>
+                  <li>Talk to someone you trust</li>
+                  <li>Focus on progress, not perfection</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+            <article class="section-card resume-card section-anchor" id="resume-builder">
+              <div class="section-title">
+                <h3>AI Resume Builder</h3>
+              </div>
+
+              <div class="resume-layout">
+                <form class="resume-form" id="resumeForm">
+                  <div class="form-grid-two">
+                    <label>
+                      Full Name
+                      <input id="resumeName" type="text" value="Zarul H." />
+                    </label>
+                    <label>
+                      Target Role
+                      <input id="resumeTargetRole" type="text" value="Front End Developer" />
+                    </label>
+                  </div>
+
+                  <div class="form-grid-two">
+                    <label>
+                      Email
+                      <input id="resumeEmail" type="email" value="zarul@example.com" />
+                    </label>
+                    <label>
+                      Phone
+                      <input id="resumePhone" type="text" value="+60 12-345 6789" />
+                    </label>
+                  </div>
+
+                  <div class="form-grid-two">
+                    <label>
+                      Location
+                      <input id="resumeLocation" type="text" value="Kuala Lumpur, Malaysia" />
+                    </label>
+                    <label>
+                      LinkedIn / Portfolio
+                      <input id="resumePortfolio" type="text" value="linkedin.com/in/zarulh" />
+                    </label>
+                  </div>
+
+                  <div class="form-grid-two">
+                    <label>
+                      University / Institution
+                      <input id="resumeUniversity" type="text" value="Management and Science University (MSU)" />
+                    </label>
+                    <label>
+                      Education
+                      <input id="resumeEducation" type="text" value="BS in Computer Science" />
+                    </label>
+                  </div>
+
+                  <label>
+                    Professional Summary
+                    <textarea id="resumeSummary" rows="3">Motivated front-end developer with strong foundations in HTML, CSS, JavaScript, and user-focused product design.</textarea>
+                  </label>
+
+                  <label>
+                    Skills (comma separated)
+                    <input id="resumeSkills" type="text" value="JavaScript, HTML, CSS, Python, SQL, UI Design, Git" />
+                  </label>
+
+                  <label>
+                    Work Experience
+                    <textarea id="resumeExperience" rows="4">Intern Web Developer at XYZ Tech
+- Built responsive landing pages
+- Collaborated with designers and QA
+- Improved page load speed and UI consistency</textarea>
+                  </label>
+
+                  <label>
+                    Projects
+                    <textarea id="resumeProjects" rows="4">PathWise AI - Career companion hackathon demo
+Personal Portfolio Website
+Task Management App</textarea>
+                  </label>
+
+                  <div class="form-grid-two">
+                    <label>
+                      Certifications / Courses
+                      <textarea id="resumeCertifications" rows="3">Google UX Design
+Responsive Web Design Certificate</textarea>
+                    </label>
+                    <label>
+                      Achievements / Leadership
+                      <textarea id="resumeAchievements" rows="3">Hackathon participant
+Led class project presentation
+Active university tech club member</textarea>
+                    </label>
+                  </div>
+
+                  <div class="resume-actions">
+                    <button class="primary-btn full-btn" id="generateResumeBtn" type="button">
+                      Generate Resume
+                    </button>
+                    <button class="secondary-btn full-btn" id="downloadResumePdfBtn" type="button">
+                      Print / Download PDF CV
+                    </button>
+                  </div>
+                </form>
+
+                <div class="resume-preview" id="resumePreview">
+                  <div class="resume-preview-header">
+                    <strong id="previewName">Zarul H.</strong>
+                    <span id="previewRole">Front End Developer</span>
+                  </div>
+                  <div class="resume-preview-contact" id="previewContact">
+                    zarul@example.com • +60 12-345 6789 • Kuala Lumpur, Malaysia • linkedin.com/in/zarulh
+                  </div>
+                  <div class="resume-preview-body">
+                    <div>
+                      <h4>Professional Summary</h4>
+                      <p id="previewSummary">Motivated front-end developer with strong foundations in HTML, CSS, JavaScript, and user-focused product design.</p>
+                    </div>
+                    <div>
+                      <h4>Education</h4>
+                      <p id="previewEducation">BS in Computer Science</p>
+                      <p class="preview-subtext" id="previewUniversity">Management and Science University (MSU)</p>
+                    </div>
+                    <div>
+                      <h4>Skills</h4>
+                      <div class="tag-list" id="previewSkills"></div>
+                    </div>
+                    <div>
+                      <h4>Work Experience</h4>
+                      <p id="previewExperience">Intern Web Developer at XYZ Tech</p>
+                    </div>
+                    <div>
+                      <h4>Projects</h4>
+                      <p id="previewProjects">PathWise AI - Career companion hackathon demo</p>
+                    </div>
+                    <div>
+                      <h4>Certifications</h4>
+                      <p id="previewCertifications">Google UX Design</p>
+                    </div>
+                    <div>
+                      <h4>Achievements</h4>
+                      <p id="previewAchievements">Hackathon participant</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="section-card career-card section-anchor" id="career-path">
+              <div class="section-title">
+                <h3>Career Recommendation</h3>
+              </div>
+
+              <form class="career-form" id="careerForm">
+                <div class="career-top-fields expanded-career-fields">
+                  <label>
+                    Skills
+                    <input id="careerSkills" type="text" value="JavaScript, HTML, CSS, UI design" />
+                  </label>
+                  <label>
+                    Interests
+                    <input id="careerInterests" type="text" value="Building websites, Design, Problem solving" />
+                  </label>
+                  <label>
+                    University / Institution
+                    <input id="careerUniversity" type="text" value="Management and Science University (MSU)" />
+                  </label>
+                  <label>
+                    Field of Study
+                    <input id="careerFieldOfStudy" type="text" value="Computer Science" />
+                  </label>
+                  <label>
+                    Personality Style
+                    <select id="careerPersonality">
+                      <option value="analytical">Analytical</option>
+                      <option value="creative" selected>Creative</option>
+                      <option value="supportive">Supportive</option>
+                      <option value="leader">Leadership-Oriented</option>
+                    </select>
+                  </label>
+                  <label>
+                    Stress Tolerance
+                    <select id="stressTolerance">
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </label>
+                  <label>
+                    Preferred Work Style
+                    <select id="workStyle">
+                      <option value="solo">Focused / Solo</option>
+                      <option value="balanced" selected>Balanced</option>
+                      <option value="collaborative">Highly Collaborative</option>
+                    </select>
+                  </label>
+                  <label>
+                    Preferred Work Environment
+                    <select id="careerEnvironment">
+                      <option value="remote">Remote</option>
+                      <option value="hybrid" selected>Hybrid</option>
+                      <option value="office">Office</option>
+                      <option value="field">Hands-on / Field Work</option>
+                    </select>
+                  </label>
+                  <label>
+                    Leadership Preference
+                    <select id="careerLeadership">
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </label>
+                  <label>
+                    Communication Strength
+                    <select id="careerCommunication">
+                      <option value="developing">Developing</option>
+                      <option value="good" selected>Good</option>
+                      <option value="strong">Strong</option>
+                    </select>
+                  </label>
+                  <label>
+                    Creativity Level
+                    <select id="careerCreativity">
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high" selected>High</option>
+                    </select>
+                  </label>
+                  <label>
+                    Data / Numbers Comfort
+                    <select id="careerDataComfort">
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="career-results">
+                  <div class="career-list">
+                    <div class="career-list-head">
+                    <strong>Top Matching Careers</strong>
+                    <button class="text-action" id="recommendCareerBtn" type="button">
+                      Refresh Match
+                    </button>
+                    </div>
+                    <div id="careerResults"></div>
+                  </div>
+
+                  <div class="career-explanation">
+                    <strong id="topCareerName">Front End Developer</strong>
+                    <p class="career-fit-meta" id="careerFitMeta">Best fit based on your skills, interests, study background, and work preferences.</p>
+                    <p id="careerReason">
+                      Your skills in JavaScript, HTML, CSS and problem solving match
+                      well with this role. You enjoy creative work and building user
+                      interfaces.
+                    </p>
+                  <div>
+                    <span class="mini-label">Improvement Tips</span>
+                    <ul class="bullet-list compact" id="careerTips">
+                      <li>Learn React.js</li>
+                      <li>Improve UI/UX skills</li>
+                      <li>Build more projects</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </article>
+
+          <article class="section-card impact-card section-anchor" id="impact">
+            <div class="section-title">
+              <h3>Novelty and Impact</h3>
+            </div>
+
+            <div class="impact-grid">
+              <div class="impact-item">
+                <span>🧠</span>
+                <div>
+                  <strong>3-role AI interview simulation</strong>
+                  <p>HR, Technical, and Manager perspectives in one platform.</p>
+                </div>
+              </div>
+              <div class="impact-item">
+                <span>⚡</span>
+                <div>
+                  <strong>Real-time feedback</strong>
+                  <p>Instant confidence, clarity, and relevance insights.</p>
+                </div>
+              </div>
+              <div class="impact-item">
+                <span>📄</span>
+                <div>
+                  <strong>AI resume builder</strong>
+                  <p>Dynamic resume generation for a stronger first impression.</p>
+                </div>
+              </div>
+              <div class="impact-item">
+                <span>🎯</span>
+                <div>
+                  <strong>Personalized career matching</strong>
+                  <p>Career suggestions based on skills, interests, and work style.</p>
+                </div>
+              </div>
+              <div class="impact-item">
+                <span>🌿</span>
+                <div>
+                  <strong>Mental wellbeing support</strong>
+                  <p>Positive, non-clinical tips for stress-free career growth.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section-card dashboard-card section-anchor" id="dashboard">
+            <div class="section-title">
+              <h3>Your Progress Dashboard</h3>
+            </div>
+
+            <div class="dashboard-grid">
+              <div class="dashboard-metric">
+                <div class="metric-head">
+                  <span>Interview Score</span>
+                  <span>🎤</span>
+                </div>
+                <strong class="metric-number" id="dashboardInterviewScore" data-target="78">78%</strong>
+                <div class="metric-line large">
+                  <div class="metric-fill purple-fill" id="dashboardInterviewBar"></div>
+                </div>
+              </div>
+
+              <div class="dashboard-metric">
+                <div class="metric-head">
+                  <span>Resume Completion</span>
+                  <span>📄</span>
+                </div>
+                <strong class="metric-number" id="dashboardResumeScore" data-target="90">90%</strong>
+                <div class="metric-line large">
+                  <div class="metric-fill green-fill" id="dashboardResumeBar"></div>
+                </div>
+              </div>
+
+              <div class="dashboard-metric">
+                <div class="metric-head">
+                  <span>Career Match</span>
+                  <span>💙</span>
+                </div>
+                <strong class="metric-number" id="dashboardCareerScore" data-target="92">92%</strong>
+                <div class="metric-line large">
+                  <div class="metric-fill blue-fill" id="dashboardCareerBar"></div>
+                </div>
+              </div>
+
+              <div class="dashboard-metric">
+                <div class="metric-head">
+                  <span>Wellbeing Status</span>
+                  <span>💜</span>
+                </div>
+                <strong class="status-number" id="dashboardWellbeingStatus">Good</strong>
+                <div class="metric-line large">
+                  <div class="metric-fill purple-fill" id="dashboardWellbeingBar"></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section-card team-card section-anchor" id="team">
+            <div class="section-title">
+              <h3>Meet Team Nextara</h3>
+            </div>
+
+            <div class="team-layout">
+              <div class="team-members">
+                <div class="person-card">
+                  <div class="person-avatar">Z</div>
+                  <strong>Zarul</strong>
+                  <span>Developer</span>
+                </div>
+                <div class="person-card">
+                  <div class="person-avatar">K</div>
+                  <strong>Khin</strong>
+                  <span>Designer</span>
+                </div>
+                <div class="person-card">
+                  <div class="person-avatar">L</div>
+                  <strong>Laku</strong>
+                  <span>Researcher</span>
+                </div>
+                <div class="person-card">
+                  <div class="person-avatar">R</div>
+                  <strong>Ryan</strong>
+                  <span>Tester</span>
+                </div>
+              </div>
+
+              <div class="mentor-card">
+                <div class="person-avatar mentor-avatar">M</div>
+                <div>
+                  <span class="mini-label">Mentor</span>
+                  <strong>Dr Hafizul Bin Othman</strong>
+                  <p>Management and Science University (MSU)</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <footer class="footer-card" id="footer">
+        <div class="footer-brand">
+          <div class="footer-icon">🧠</div>
+          <div>
+            <h3>PathWise AI</h3>
+            <p>
+              PathWise AI is your AI-powered companion for career growth,
+              confidence building, and mental wellbeing.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-motto">
+          <span>Innovating Solutions</span>
+          <strong>With Knowledge We Serve</strong>
+        </div>
+
+        <div class="sdg-grid">
+          <div class="sdg-card sdg-3">
+            <strong>3</strong>
+            <span>Good Health and Well-being</span>
+          </div>
+          <div class="sdg-card sdg-4">
+            <strong>4</strong>
+            <span>Quality Education</span>
+          </div>
+          <div class="sdg-card sdg-8">
+            <strong>8</strong>
+            <span>Decent Work and Economic Growth</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
