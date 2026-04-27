@@ -882,6 +882,7 @@ function closeCamera() {
   cameraStatus.textContent = "Camera Off";
   cameraIndicator.textContent = "Offline";
   cameraIndicator.classList.remove("on");
+  updateSessionStatus("Camera closed. You can continue the interview with voice or text answers.");
 }
 
 function startInterviewSession(announce = true) {
@@ -1341,8 +1342,10 @@ function buildCareerReason(role, profile) {
   );
   const skillSummary = matchedSkills.slice(0, 3).join(", ") || "your current strengths";
   const interestSummary = matchedInterests.slice(0, 2).join(", ") || "your preferred interests";
+  const studySummary = careerFieldOfStudy.value.trim() || "your study background";
+  const stressSummary = profile.stress === "low" ? "a lower-stress path" : profile.stress === "high" ? "a high-pressure environment" : "a balanced level of challenge";
 
-  return `This role aligns with ${skillSummary} and your interest in ${interestSummary}. Your ${profile.personality} personality style and ${profile.workStyle} work preference also support this direction.`;
+  return `This role aligns with ${skillSummary}, your interest in ${interestSummary}, and your ${studySummary} background. It also fits your ${profile.personality} personality style, ${profile.workStyle} work preference, and preference for ${stressSummary}.`;
 }
 
 function renderCareerResults() {
@@ -1357,6 +1360,14 @@ function renderCareerResults() {
     .slice(0, 5);
 
   careerResults.innerHTML = "";
+
+  if (!scoredRoles.length) {
+    topCareerName.textContent = "No strong match yet";
+    careerFitMeta.textContent = "Add more profile details to generate better recommendations.";
+    careerReason.textContent = "The system needs more information about your skills, interests, and preferences before recommending a career path.";
+    careerTips.innerHTML = "<li>Add more specific skills and interests</li><li>Choose your work preferences</li><li>Refresh the career match</li>";
+    return;
+  }
 
   scoredRoles.forEach((role, index) => {
     const row = document.createElement("div");
@@ -1477,7 +1488,7 @@ voiceAnswerBtn.addEventListener("click", () => {
 });
 openCameraBtn.addEventListener("click", openCamera);
 closeCameraBtn.addEventListener("click", closeCamera);
-finishInterviewBtn.addEventListener("click", () => endInterviewSession(false));
+finishInterviewBtn.addEventListener("click", () => endInterviewSession(true));
 nextQuestionBtn.addEventListener("click", cycleQuestionManually);
 submitAnswerBtn.addEventListener("click", submitAnswer);
 downloadReportBtn.addEventListener("click", downloadReport);
