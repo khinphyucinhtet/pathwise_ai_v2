@@ -1721,7 +1721,38 @@ select:focus {
 
 .wellbeing-question {
   font-weight: 700;
-  margin-bottom: 18px;
+  margin: 0;
+}
+
+.stress-slider-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(107, 63, 242, 0.12);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(247, 243, 255, 0.72));
+}
+
+.stress-helper {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+#stressValueText {
+  display: inline-flex;
+  width: fit-content;
+  padding: 9px 13px;
+  border-radius: 999px;
+  color: var(--primary-dark);
+  background: rgba(119, 77, 255, 0.1);
+}
+
+#stressRange {
+  width: 100%;
+  accent-color: var(--primary);
+  cursor: pointer;
 }
 
 .stress-selector {

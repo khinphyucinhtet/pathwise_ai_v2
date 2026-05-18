@@ -412,32 +412,17 @@
 
             <div class="wellbeing-layout vertical-layout">
               <div class="wellbeing-top-card">
-                <p class="wellbeing-question">How stressed are you feeling today?</p>
-                <div class="stress-selector" id="stressSelector">
-                  <button class="stress-btn" type="button" data-level="1">
-                    <span>🙂</span>
-                    <small>1</small>
-                  </button>
-                  <button class="stress-btn" type="button" data-level="2">
-                    <span>😊</span>
-                    <small>2</small>
-                  </button>
-                  <button class="stress-btn active" type="button" data-level="3">
-                    <span>😐</span>
-                    <small>3</small>
-                  </button>
-                  <button class="stress-btn" type="button" data-level="4">
-                    <span>😟</span>
-                    <small>4</small>
-                  </button>
-                  <button class="stress-btn" type="button" data-level="5">
-                    <span>😣</span>
-                    <small>5</small>
-                  </button>
-                </div>
-                <div class="stress-scale">
-                  <span>Very Calm</span>
-                  <span>Very Stressed</span>
+                <div class="stress-slider-card">
+                  <div>
+                    <p class="wellbeing-question">Stress Level</p>
+                    <span class="stress-helper">0 = very calm, 10 = extremely stressed</span>
+                  </div>
+                  <strong id="stressValueText">Current stress: 5 / 10</strong>
+                  <input id="stressRange" type="range" min="0" max="10" value="5" />
+                  <div class="stress-scale">
+                    <span>0 Calm</span>
+                    <span>10 Extremely Stressed</span>
+                  </div>
                 </div>
                 <div class="wellbeing-check-grid">
                   <label>
@@ -445,18 +430,25 @@
                     <select id="wellbeingPressure">
                       <option value="interview" selected>Upcoming interviews</option>
                       <option value="internship">Internship search</option>
-                      <option value="deadlines">Assignment deadlines</option>
-                      <option value="graduation">Graduation pressure</option>
-                      <option value="direction">Career uncertainty</option>
+                      <option value="fulltime-asap">Need full-time job ASAP</option>
+                      <option value="international-student">International student securing work</option>
+                      <option value="part-time-student">Part-time student needing income</option>
                       <option value="financial">Financial stress</option>
                       <option value="family">Family expectations</option>
+                      <option value="graduation">Graduation / final semester pressure</option>
+                      <option value="career-uncertain">Unsure career direction</option>
+                      <option value="applications">Job applications</option>
+                      <option value="deadlines">Assignment / workload deadlines</option>
                     </select>
                   </label>
                   <label>
                     Support Level
                     <select id="wellbeingSupport">
-                      <option value="alone">Mostly alone</option>
+                      <option value="alone">Mostly alone / no support</option>
                       <option value="some" selected>Some support</option>
+                      <option value="parents">Parents or family support</option>
+                      <option value="friends">Friends support</option>
+                      <option value="mentor">Mentor / lecturer support</option>
                       <option value="strong">Strong support system</option>
                     </select>
                   </label>
@@ -489,13 +481,13 @@
                   <p class="wellbeing-status-copy">A simple emotional check-in to keep career preparation manageable and supportive.</p>
                 </div>
                 <div class="fuzzy-loading-card hidden" id="fuzzyLoadingCard" aria-live="polite">
-                  <strong>Analyzing wellbeing factors...</strong>
+                  <strong>Analyzing your wellbeing and career urgency signals...</strong>
                   <div class="fuzzy-factor-list">
-                    <span>Stress.............&#10003;</span>
-                    <span>Support............&#10003;</span>
-                    <span>Urgency............&#10003;</span>
-                    <span>Sleep..............&#10003;</span>
-                    <span>Energy.............&#10003;</span>
+                    <span>&#10003; Stress level received</span>
+                    <span>&#10003; Job urgency checked</span>
+                    <span>&#10003; Support level reviewed</span>
+                    <span>&#10003; Sleep and energy considered</span>
+                    <span>&#10003; Fuzzy logic rules applied</span>
                   </div>
                   <p>Applying fuzzy logic rules...</p>
                   <div class="fuzzy-progress-track">
@@ -556,6 +548,8 @@
                       <span>Stress: <strong id="reasonStress">0.6</strong></span>
                       <span>Urgency: <strong id="reasonUrgency">0.9</strong></span>
                       <span>Support: <strong id="reasonSupport">0.5</strong></span>
+                      <span>Sleep risk: <strong id="reasonSleep">0.3</strong></span>
+                      <span>Energy risk: <strong id="reasonEnergy">0.5</strong></span>
                       <span>Rule: <strong id="reasonRule">IF stress HIGH AND urgency HIGH THEN risk HIGH</strong></span>
                       <span>Fuzzy: <strong id="reasonFuzzy">min(0.6,0.9)=0.6</strong></span>
                       <span>Final: <strong id="reasonFinal">max(0.6,0.5)=0.6</strong></span>
@@ -564,8 +558,15 @@
                     <pre><code>high_risk(Person,Degree):-
 stress(Person,S),
 urgency(Person,U),
-Degree is min(S,U).</code></pre>
-                    <small>This is demonstration only.</small>
+Degree is min(S,U).
+
+final_risk(Person,FinalDegree):-
+    high_risk(Person,D1),
+    support_risk(Person,D2),
+    sleep_risk(Person,D3),
+    energy_risk(Person,D4),
+    FinalDegree is max(D1,max(D2,max(D3,D4))).</code></pre>
+                    <small>This is a frontend demo showing how fuzzy logic reasoning can be represented in a real user interface.</small>
                   </details>
                   <ul class="bullet-list compact" id="wellbeingTips">
                     <li>Take short breaks and breathe</li>
@@ -580,9 +581,11 @@ Degree is min(S,U).</code></pre>
               <button class="wellbeing-modal-backdrop" id="wellbeingModalBackdrop" type="button" aria-label="Close assessment result"></button>
               <div class="wellbeing-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="wellbeingModalTitle">
                 <span class="eyebrow">Assessment Complete</span>
-                <h3 id="wellbeingModalTitle">Your wellbeing risk: <span id="modalRiskCategory">LOW</span></h3>
-                <p>Priority queue: <strong id="modalQueue">NORMAL SUPPORT</strong></p>
+                <h3 id="wellbeingModalTitle">Your fuzzy risk level: <span id="modalRiskCategory">LOW</span></h3>
+                <p>Queue: <strong id="modalQueue">STANDARD ACCESS</strong></p>
                 <p>Estimated support: <strong id="modalWait">2-3 days</strong></p>
+                <p>Position: <strong id="modalPosition">#18 in queue</strong></p>
+                <p>PathWise AI will use this priority level to guide the next career support action.</p>
                 <button class="primary-btn" id="wellbeingModalOk" type="button">OK</button>
               </div>
             </div>

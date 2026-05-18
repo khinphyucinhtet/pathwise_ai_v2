@@ -556,6 +556,8 @@ const careerTips = document.getElementById("careerTips");
 const recommendCareerBtn = document.getElementById("recommendCareerBtn");
 
 const stressButtons = document.querySelectorAll(".stress-btn");
+const stressRange = document.getElementById("stressRange");
+const stressValueText = document.getElementById("stressValueText");
 const wellbeingMessage = document.getElementById("wellbeingMessage");
 const wellbeingTips = document.getElementById("wellbeingTips");
 const wellbeingStatusTitle = document.getElementById("wellbeingStatusTitle");
@@ -580,6 +582,8 @@ const fuzzyAction = document.getElementById("fuzzyAction");
 const reasonStress = document.getElementById("reasonStress");
 const reasonUrgency = document.getElementById("reasonUrgency");
 const reasonSupport = document.getElementById("reasonSupport");
+const reasonSleep = document.getElementById("reasonSleep");
+const reasonEnergy = document.getElementById("reasonEnergy");
 const reasonRule = document.getElementById("reasonRule");
 const reasonFuzzy = document.getElementById("reasonFuzzy");
 const reasonFinal = document.getElementById("reasonFinal");
@@ -590,6 +594,7 @@ const wellbeingModalOk = document.getElementById("wellbeingModalOk");
 const modalRiskCategory = document.getElementById("modalRiskCategory");
 const modalQueue = document.getElementById("modalQueue");
 const modalWait = document.getElementById("modalWait");
+const modalPosition = document.getElementById("modalPosition");
 
 const dashboardInterviewScore = document.getElementById("dashboardInterviewScore");
 const dashboardResumeScore = document.getElementById("dashboardResumeScore");
@@ -653,17 +658,20 @@ const authState = {
 };
 
 const fuzzyRiskMaps = {
-  stress: { 1: 0.2, 2: 0.4, 3: 0.6, 4: 0.8, 5: 1.0 },
   urgency: {
     interview: 0.9,
-    internship: 0.9,
+    internship: 0.8,
+    "fulltime-asap": 1.0,
+    "international-student": 0.95,
+    "part-time-student": 0.85,
+    financial: 0.95,
+    family: 0.75,
+    graduation: 0.85,
+    "career-uncertain": 0.65,
+    applications: 0.75,
     deadlines: 0.6,
-    graduation: 0.9,
-    direction: 0.6,
-    financial: 0.9,
-    family: 0.6
   },
-  support: { strong: 0.2, some: 0.5, alone: 0.9 },
+  support: { alone: 0.9, some: 0.5, parents: 0.35, friends: 0.4, mentor: 0.3, strong: 0.2 },
   energy: { high: 0.2, medium: 0.5, low: 0.8 },
   sleep: { "less-4": 0.9, "4-6": 0.7, "6-8": 0.3, "8-plus": 0.2 }
 };
@@ -672,17 +680,20 @@ const fuzzyRiskProfiles = {
   low: {
     label: "LOW RISK",
     shortLabel: "LOW",
-    queue: "NORMAL SUPPORT",
+    queue: "STANDARD ACCESS",
     wait: "2-3 days",
-    position: "#18 in queue",
-    action: "Self-help resources",
+    positionRange: [12, 20],
+    action: "Continue self-guided career preparation",
     emotionalState: "Good",
-    message: "Stay balanced. Your current wellbeing signals look manageable, so keep a steady pace and use light self-help resources.",
+    dashboardStatus: "Good",
+    dashboardBar: 35,
+    explanation: "Your current inputs show a manageable situation, so you can continue using the system through standard access.",
+    message: "Stay balanced. Your current wellbeing and career urgency signals look manageable, so continue steady preparation without rushing.",
     tips: [
-      "Stay balanced with short breaks",
-      "Keep a simple study or job-search routine",
-      "Use self-help resources when stress rises",
-      "Practice career tasks at a calm pace"
+      "Continue steady interview or resume preparation",
+      "Keep a healthy routine while applying for jobs",
+      "Use PathWise AI when you need practice or direction",
+      "Track your progress weekly"
     ]
   },
   medium: {
@@ -690,15 +701,19 @@ const fuzzyRiskProfiles = {
     shortLabel: "MEDIUM",
     queue: "PRIORITY SUPPORT",
     wait: "12-24 hrs",
-    position: "#7 in queue",
-    action: "Guided wellbeing support",
+    positionRange: [5, 9],
+    action: "Guided wellbeing and career support",
     emotionalState: "Moderate Concern",
-    message: "Take breaks. The fuzzy assessment suggests some pressure, so reduce overload and use guided wellbeing support before pushing harder.",
+    dashboardStatus: "Moderate",
+    dashboardBar: 60,
+    explanation: "Your inputs show moderate pressure. You are not in the highest priority queue, but PathWise AI will place you in priority support so you can receive guided career and wellbeing assistance soon.",
+    message: "Take breaks. The fuzzy assessment suggests moderate pressure, so use guided wellbeing and career support step by step.",
     tips: [
       "Take breaks between interview or resume tasks",
       "Split urgent work into smaller actions",
-      "Ask a mentor or friend for a quick check-in",
-      "Use guided wellbeing support if stress continues"
+      "Ask a mentor, friend, or family member for a quick check-in",
+      "Use guided wellbeing support if stress continues",
+      "Use PathWise AI career tools to prepare step by step"
     ]
   },
   high: {
@@ -706,16 +721,20 @@ const fuzzyRiskProfiles = {
     shortLabel: "HIGH",
     queue: "URGENT SUPPORT",
     wait: "Immediate",
-    position: "#2 in queue",
-    action: "Advisor / counsellor recommendation",
+    positionRange: [1, 3],
+    action: "Immediate advisor / counsellor recommendation",
     emotionalState: "High Concern",
     urgentState: "Urgent Support Needed",
-    message: "Seek support. Your current signals suggest high pressure, so pause intense career prep and reach out to an advisor, counsellor, mentor, or trusted person.",
+    dashboardStatus: "Needs Support",
+    dashboardBar: 90,
+    explanation: "Your inputs show strong pressure and urgent career need. PathWise AI places you near the front of the queue for faster support and stronger guidance.",
+    message: "Seek support. Your current signals suggest high pressure and urgent career need, so let PathWise AI prioritize stronger guidance.",
     tips: [
-      "Book counsellor or advisor support",
-      "Pause interview prep if it feels too heavy",
-      "Take guided support before making big decisions",
-      "Contact someone you trust if pressure feels overwhelming"
+      "Pause and reduce non-urgent tasks first",
+      "Use immediate support or contact a trusted person",
+      "Let PathWise AI prioritize your career support queue",
+      "Focus on the most urgent job or internship action first",
+      "Consider speaking with a counsellor, lecturer, or advisor"
     ]
   }
 };
@@ -1850,8 +1869,13 @@ function renderCareerResults() {
 }
 
 function getActiveStressLevel() {
-  const activeStress = document.querySelector(".stress-btn.active");
-  return activeStress ? Number(activeStress.dataset.level) : 3;
+  return stressRange ? Number(stressRange.value) : 5;
+}
+
+function updateStressSliderText() {
+  if (stressValueText) {
+    stressValueText.textContent = `Current stress: ${getActiveStressLevel()} / 10`;
+  }
 }
 
 function getRiskColorClass(categoryKey) {
@@ -1878,25 +1902,32 @@ function getFuzzyWord(value) {
   return "LOW";
 }
 
+function getRandomQueuePosition(categoryKey) {
+  const [min, max] = fuzzyRiskProfiles[categoryKey].positionRange;
+  const position = Math.floor(Math.random() * (max - min + 1)) + min;
+  return `#${position} in queue`;
+}
+
 function calculateFuzzyAssessment(level = getActiveStressLevel()) {
   const sleepValue = wellbeingSleep ? wellbeingSleep.value : "6-8";
   const urgencyValue = wellbeingPressure ? wellbeingPressure.value : "interview";
   const energyValue = wellbeingEnergy ? wellbeingEnergy.value : "medium";
   const supportValue = wellbeingSupport ? wellbeingSupport.value : "some";
 
-  const stressRisk = fuzzyRiskMaps.stress[level] || 0.6;
+  const stressRisk = clamp(level / 10, 0, 1);
   const urgencyRisk = fuzzyRiskMaps.urgency[urgencyValue] || 0.6;
   const supportRisk = fuzzyRiskMaps.support[supportValue] || 0.5;
   const energyRisk = fuzzyRiskMaps.energy[energyValue] || 0.5;
   const sleepRisk = fuzzyRiskMaps.sleep[sleepValue] || 0.3;
 
-  // Fuzzy logic demo: stress and urgency are combined with min(),
-  // then the strongest wellbeing risk signal wins through max().
+  // Fuzzy logic demo calculation: stress and job urgency use min(),
+  // then lack of support, sleep, and energy compete through max().
   const stressUrgencyRisk = Math.min(stressRisk, urgencyRisk);
-  const risk = Math.max(stressUrgencyRisk, supportRisk, energyRisk, sleepRisk);
+  const risk = Number(Math.max(stressUrgencyRisk, supportRisk, sleepRisk, energyRisk).toFixed(2));
   const categoryKey = classifyFuzzyRisk(risk);
   const profile = fuzzyRiskProfiles[categoryKey];
   const emotionalState = categoryKey === "high" && risk >= 0.85 ? profile.urgentState : profile.emotionalState;
+  const position = getRandomQueuePosition(categoryKey);
 
   return {
     level,
@@ -1913,6 +1944,7 @@ function calculateFuzzyAssessment(level = getActiveStressLevel()) {
     risk,
     categoryKey,
     emotionalState,
+    position,
     ...profile
   };
 }
@@ -1941,12 +1973,14 @@ function renderReasoning(assessment) {
 
   const stressWord = getFuzzyWord(assessment.stressRisk);
   const urgencyWord = getFuzzyWord(assessment.urgencyRisk);
-  const minText = `min(${assessment.stressRisk.toFixed(1)},${assessment.urgencyRisk.toFixed(1)})=${assessment.stressUrgencyRisk.toFixed(1)}`;
-  const maxText = `max(${assessment.stressUrgencyRisk.toFixed(1)},${assessment.supportRisk.toFixed(1)},${assessment.energyRisk.toFixed(1)},${assessment.sleepRisk.toFixed(1)})=${assessment.risk.toFixed(1)}`;
+  const minText = `min(${assessment.stressRisk.toFixed(2)}, ${assessment.urgencyRisk.toFixed(2)}) = ${assessment.stressUrgencyRisk.toFixed(2)}`;
+  const maxText = `max(${assessment.stressUrgencyRisk.toFixed(2)}, ${assessment.supportRisk.toFixed(2)}, ${assessment.sleepRisk.toFixed(2)}, ${assessment.energyRisk.toFixed(2)}) = ${assessment.risk.toFixed(2)}`;
 
-  reasonStress.textContent = assessment.stressRisk.toFixed(1);
-  reasonUrgency.textContent = assessment.urgencyRisk.toFixed(1);
-  reasonSupport.textContent = assessment.supportRisk.toFixed(1);
+  reasonStress.textContent = assessment.stressRisk.toFixed(2);
+  reasonUrgency.textContent = assessment.urgencyRisk.toFixed(2);
+  reasonSupport.textContent = assessment.supportRisk.toFixed(2);
+  if (reasonSleep) reasonSleep.textContent = assessment.sleepRisk.toFixed(2);
+  if (reasonEnergy) reasonEnergy.textContent = assessment.energyRisk.toFixed(2);
   reasonRule.textContent = `IF stress ${stressWord} AND urgency ${urgencyWord} THEN risk ${assessment.shortLabel}`;
   reasonFuzzy.textContent = minText;
   reasonFinal.textContent = maxText;
@@ -1970,7 +2004,7 @@ function renderFuzzyResult(assessment, options = {}) {
     fuzzyCategoryBadge.textContent = assessment.shortLabel;
   }
   if (wellbeingSummary) {
-    wellbeingSummary.textContent = `${assessment.label} detected from stress, urgency, support, sleep, and energy signals. Suggested action: ${assessment.action}.`;
+    wellbeingSummary.textContent = `${assessment.label} detected from stress, job urgency, support, sleep, and energy signals. Based on this, PathWise AI recommends ${assessment.action}. ${assessment.explanation}`;
   }
   if (fuzzyRiskScore) fuzzyRiskScore.textContent = assessment.risk.toFixed(2);
   if (fuzzyRiskCategory) fuzzyRiskCategory.textContent = assessment.label;
@@ -1978,6 +2012,11 @@ function renderFuzzyResult(assessment, options = {}) {
   if (fuzzyWait) fuzzyWait.textContent = assessment.wait;
   if (fuzzyPosition) fuzzyPosition.textContent = assessment.position;
   if (fuzzyAction) fuzzyAction.textContent = assessment.action;
+
+  if (dashboardWellbeingStatus && dashboardWellbeingBar) {
+    dashboardWellbeingStatus.textContent = assessment.dashboardStatus;
+    updateDashboardBar(dashboardWellbeingBar, assessment.dashboardBar);
+  }
 
   if (fuzzyRiskMeter) {
     fuzzyRiskMeter.classList.remove("medium", "high");
@@ -1996,6 +2035,7 @@ function renderFuzzyResult(assessment, options = {}) {
 }
 
 function updateWellbeing(level) {
+  updateStressSliderText();
   stressButtons.forEach((button) => {
     button.classList.toggle("active", Number(button.dataset.level) === level);
   });
@@ -2007,8 +2047,6 @@ function updateWellbeing(level) {
   if (fuzzyAssessmentHasRun) {
     renderFuzzyResult(assessment);
   }
-
-  updateWellbeingDashboard(level);
 }
 
 function showWellbeingModal(assessment) {
@@ -2019,6 +2057,9 @@ function showWellbeingModal(assessment) {
   modalRiskCategory.textContent = assessment.shortLabel;
   modalQueue.textContent = assessment.queue;
   modalWait.textContent = assessment.wait;
+  if (modalPosition) {
+    modalPosition.textContent = assessment.position;
+  }
   wellbeingAssessmentModal.classList.remove("hidden");
   wellbeingAssessmentModal.setAttribute("aria-hidden", "false");
 }
@@ -2187,6 +2228,10 @@ stressButtons.forEach((button) => {
   button.addEventListener("click", () => updateWellbeing(Number(button.dataset.level)));
 });
 
+if (stressRange) {
+  stressRange.addEventListener("input", () => updateWellbeing(getActiveStressLevel()));
+}
+
 [wellbeingSleep, wellbeingPressure, wellbeingEnergy, wellbeingSupport].forEach((field) => {
   if (field) {
     field.addEventListener("change", () => {
@@ -2255,6 +2300,6 @@ setActiveRole("manager", { restartIfRunning: false });
 resetFeedback();
 updateResumePreview();
 renderCareerResults();
-updateWellbeing(3);
+updateWellbeing(getActiveStressLevel());
 updateDashboardBar(dashboardInterviewBar, 78);
 updateLoginButton();
