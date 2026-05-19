@@ -456,6 +456,14 @@
                     </select>
                   </label>
                   <label>
+                    Social Isolation
+                    <select id="wellbeingIsolation">
+                      <option value="low">Low (friends/family available)</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High (mostly alone)</option>
+                    </select>
+                  </label>
+                  <label>
                     Sleep Hours
                     <select id="wellbeingSleep">
                       <option value="less-4">Less than 4</option>
@@ -485,6 +493,11 @@
                     </select>
                   </label>
                 </div>
+                <div class="scenario-actions" aria-label="Demo scenarios">
+                  <button class="scenario-btn" type="button" data-scenario="ryan">Scenario 1: Ryan</button>
+                  <button class="scenario-btn" type="button" data-scenario="pinky">Scenario 2: Pinky</button>
+                  <button class="scenario-btn" type="button" data-scenario="zarul">Scenario 3: Zarul</button>
+                </div>
                 <button class="fuzzy-submit-btn" id="runFuzzyAssessmentBtn" type="button">
                   Run Fuzzy Risk Assessment
                 </button>
@@ -501,7 +514,9 @@
                     <span>&#10003; Stress level received</span>
                     <span>&#10003; Job urgency checked</span>
                     <span>&#10003; Support level reviewed</span>
+                    <span>&#10003; Social isolation reviewed</span>
                     <span>&#10003; Sleep and mood considered</span>
+                    <span>&#10003; IoT signal simulated</span>
                     <span>&#10003; Fuzzy logic rules applied</span>
                   </div>
                   <p>Applying fuzzy logic rules...</p>
@@ -564,13 +579,23 @@
                       <span>Stress: <strong id="reasonStress">0.6</strong></span>
                       <span>Urgency: <strong id="reasonUrgency">0.9</strong></span>
                       <span>Support: <strong id="reasonSupport">0.5</strong></span>
+                      <span>Social Isolation: <strong id="reasonIsolation">0.5</strong></span>
                       <span>Sleep risk: <strong id="reasonSleep">0.3</strong></span>
                       <span>Mood risk: <strong id="reasonEnergy">0.5</strong></span>
+                      <span>IoT Risk: <strong id="reasonIotRisk">0.3</strong></span>
                       <span>Rule: <strong id="reasonRule">IF stress HIGH AND urgency HIGH THEN risk HIGH</strong></span>
                       <span>Fuzzy: <strong id="reasonFuzzy">min(0.6,0.9)=0.6</strong></span>
                       <span>Final: <strong id="reasonFinal">max(0.6,0.5)=0.6</strong></span>
                       <span>Category: <strong id="reasonCategory">MEDIUM</strong></span>
+                      <span>Queue: <strong id="reasonQueue">PRIORITY SUPPORT</strong></span>
+                      <span>Estimated Response: <strong id="reasonWait">12-24 hrs</strong></span>
+                      <span>Suggested Action: <strong id="reasonAction">Guided support</strong></span>
                     </div>
+                    <p class="reason-explain" id="reasonExplain">
+                      Based on the given stress, urgency, support, social isolation,
+                      sleep, mood, and IoT signals, the system explains why this queue
+                      was selected.
+                    </p>
                     <pre><code>high_risk(Person,Degree):-
 stress(Person,S),
 urgency(Person,U),
@@ -579,9 +604,10 @@ Degree is min(S,U).
 final_risk(Person,FinalDegree):-
     high_risk(Person,D1),
     support_risk(Person,D2),
-    sleep_risk(Person,D3),
-    mood_risk(Person,D4),
-    FinalDegree is max(D1,max(D2,max(D3,D4))).</code></pre>
+    isolation_risk(Person,D3),
+    sleep_risk(Person,D4),
+    mood_risk(Person,D5),
+    FinalDegree is max(D1,max(D2,max(D3,max(D4,D5)))).</code></pre>
                     <small>This is a frontend demo showing how fuzzy logic reasoning can be represented in a real user interface.</small>
                   </details>
                   <ul class="bullet-list compact" id="wellbeingTips">
@@ -593,12 +619,98 @@ final_risk(Person,FinalDegree):-
                 </div>
               </div>
             </div>
+            <div class="intelligent-showcase" id="logic-showcase">
+              <div class="section-title">
+                <h3>Intelligent System Logic Showcase</h3>
+              </div>
+              <p class="section-lead">
+                CAI20103 demo flow: fuzzy reasoning, multi-agent decision making,
+                game strategy, explainable AI, IoT simulation, and responsible AI
+                are visualized from the same job-support priority assessment.
+              </p>
+
+              <div class="intelligent-showcase-grid">
+                <div class="logic-card agent-card">
+                  <span class="mini-label">Chapter 10: Multi-Agent System</span>
+                  <h4>Agent Flow</h4>
+                  <div class="agent-flow">
+                    <div>
+                      <strong>Detection Agent</strong>
+                      <span id="agentDetection">Risk detected = --</span>
+                    </div>
+                    <div>
+                      <strong>Decision Agent</strong>
+                      <span id="agentDecision">Category = Waiting</span>
+                    </div>
+                    <div>
+                      <strong>Planning Agent</strong>
+                      <span id="agentPlanning">Plan = Run assessment</span>
+                    </div>
+                    <div>
+                      <strong>Support Agent</strong>
+                      <span id="agentSupport">Queue = --</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="logic-card pipeline-card">
+                  <span class="mini-label">Final Pipeline Requirement</span>
+                  <h4>Decision Pipeline</h4>
+                  <div class="pipeline-steps">
+                    <span data-pipeline-step="text">Text Input</span>
+                    <span data-pipeline-step="fuzzy">Fuzzy Logic</span>
+                    <span data-pipeline-step="agent">Agent Reasoning</span>
+                    <span data-pipeline-step="planning">Planning</span>
+                    <span data-pipeline-step="minimax">Game Strategy</span>
+                    <span data-pipeline-step="iot">IoT</span>
+                    <span data-pipeline-step="xai">Explainable AI</span>
+                  </div>
+                </div>
+
+                <div class="logic-card iot-card">
+                  <span class="mini-label">Chapter 13: IoT Simulation</span>
+                  <h4>Sensor Signals</h4>
+                  <div class="iot-grid">
+                    <div><span>Heart Rate</span><strong id="iotHeartRate">82 bpm</strong></div>
+                    <div><span>Sleep Hours</span><strong id="iotSleepHours">7 hrs</strong></div>
+                    <div><span>Activity Level</span><strong id="iotActivity">Medium</strong></div>
+                    <div><span>Status</span><strong id="iotStatus">Normal</strong></div>
+                    <div><span>IoT Risk</span><strong id="iotRisk">0.30</strong></div>
+                  </div>
+                </div>
+
+                <div class="logic-card minimax-card">
+                  <span class="mini-label">Chapter 11: Minimax / Game Strategy</span>
+                  <h4>Support Strategy</h4>
+                  <div class="utility-list">
+                    <div><span>Immediate Support</span><strong>90 utility</strong></div>
+                    <div><span>Guided Support</span><strong>70 utility</strong></div>
+                    <div><span>General Support</span><strong>40 utility</strong></div>
+                  </div>
+                  <p><strong id="minimaxStrategy">Selected strategy: Waiting</strong></p>
+                  <small id="minimaxReason">Selected after the fuzzy risk score is calculated.</small>
+                </div>
+
+                <div class="logic-card ethics-card">
+                  <span class="mini-label">Chapter 14: Responsible / Ethical AI</span>
+                  <h4>Responsible AI Principles</h4>
+                  <div class="ethics-list">
+                    <span>&#10003; Privacy</span>
+                    <span>&#10003; Fairness</span>
+                    <span>&#10003; Transparency</span>
+                    <span>&#10003; Human Control</span>
+                    <span>&#10003; System Limitations</span>
+                  </div>
+                  <p>This prototype supports decision-making only. Serious wellbeing decisions should still involve a human advisor.</p>
+                </div>
+              </div>
+            </div>
             <div class="wellbeing-modal hidden" id="wellbeingAssessmentModal" aria-hidden="true">
               <button class="wellbeing-modal-backdrop" id="wellbeingModalBackdrop" type="button" aria-label="Close assessment result"></button>
               <div class="wellbeing-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="wellbeingModalTitle">
                 <span class="eyebrow">Assessment Complete</span>
                 <h3 id="wellbeingModalTitle">Your fuzzy risk level: <span id="modalRiskCategory">LOW</span></h3>
-                <p>Queue: <strong id="modalQueue">STANDARD JOB SUPPORT</strong></p>
+                <p>Queue: <strong id="modalQueue">STANDARD SUPPORT</strong></p>
                 <p>Estimated support: <strong id="modalWait">2-3 days</strong></p>
                 <p>Position: <strong id="modalPosition">#18 in queue</strong></p>
                 <p>PathWise AI will use this priority level to decide how quickly the user should receive AI job-matching, resume, interview, and company connection support.</p>

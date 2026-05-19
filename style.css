@@ -1813,6 +1813,31 @@ select:focus {
   font-weight: 700;
 }
 
+.scenario-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.scenario-btn {
+  padding: 13px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(107, 63, 242, 0.16);
+  color: var(--primary-dark);
+  cursor: pointer;
+  font-weight: 900;
+  background: rgba(255, 255, 255, 0.76);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.scenario-btn:hover,
+.scenario-btn.active {
+  transform: translateY(-2px);
+  border-color: rgba(107, 63, 242, 0.36);
+  box-shadow: 0 14px 28px rgba(107, 63, 242, 0.12);
+}
+
 .wellbeing-status-pill {
   padding: 16px;
   border-radius: 18px;
@@ -2085,6 +2110,134 @@ select:focus {
   background: #20163f;
 }
 
+.reason-explain {
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.intelligent-showcase {
+  margin-top: 18px;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid var(--stroke);
+  background:
+    radial-gradient(circle at top left, rgba(107, 63, 242, 0.1), transparent 34%),
+    rgba(255, 255, 255, 0.76);
+}
+
+.intelligent-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.logic-card {
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(107, 63, 242, 0.12);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 12px 26px rgba(42, 24, 102, 0.06);
+}
+
+.logic-card h4 {
+  margin: 8px 0 14px;
+  font-size: 1.05rem;
+}
+
+.agent-card,
+.pipeline-card {
+  grid-column: span 2;
+}
+
+.agent-flow,
+.iot-grid,
+.utility-list,
+.ethics-list {
+  display: grid;
+  gap: 10px;
+}
+
+.agent-flow {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.agent-flow div,
+.iot-grid div,
+.utility-list div {
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(107, 63, 242, 0.1);
+  background: rgba(247, 243, 255, 0.74);
+}
+
+.agent-flow strong,
+.agent-flow span,
+.iot-grid span,
+.iot-grid strong,
+.utility-list span,
+.utility-list strong {
+  display: block;
+}
+
+.agent-flow span,
+.iot-grid span,
+.utility-list span,
+.ethics-card p,
+.minimax-card small {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.pipeline-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pipeline-steps span,
+.ethics-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 11px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-weight: 800;
+  background: rgba(247, 243, 255, 0.82);
+  border: 1px solid rgba(107, 63, 242, 0.1);
+}
+
+.pipeline-steps span.complete {
+  color: #0d7a45;
+  background: rgba(72, 199, 142, 0.14);
+  border-color: rgba(72, 199, 142, 0.22);
+}
+
+.pipeline-steps span.complete::before {
+  content: "✓";
+}
+
+.iot-grid {
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+}
+
+.utility-list {
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+}
+
+.minimax-card p {
+  margin: 14px 0 6px;
+}
+
+.ethics-card {
+  grid-column: span 2;
+}
+
+.ethics-list {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .wellbeing-modal {
   position: fixed;
   inset: 0;
@@ -2136,8 +2289,23 @@ select:focus {
 @media (max-width: 720px) {
   .fuzzy-factor-list,
   .fuzzy-result-grid,
-  .fuzzy-reasoning-grid {
+  .fuzzy-reasoning-grid,
+  .scenario-actions,
+  .intelligent-showcase-grid,
+  .agent-flow,
+  .iot-grid,
+  .utility-list,
+  .ethics-list {
     grid-template-columns: 1fr;
+  }
+
+  .ethics-card {
+    grid-column: span 1;
+  }
+
+  .agent-card,
+  .pipeline-card {
+    grid-column: span 1;
   }
 
   .fuzzy-result-head {

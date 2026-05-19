@@ -566,6 +566,8 @@ const wellbeingSleep = document.getElementById("wellbeingSleep");
 const wellbeingPressure = document.getElementById("wellbeingPressure");
 const wellbeingEnergy = document.getElementById("wellbeingEnergy");
 const wellbeingSupport = document.getElementById("wellbeingSupport");
+const wellbeingIsolation = document.getElementById("wellbeingIsolation");
+const scenarioButtons = document.querySelectorAll(".scenario-btn");
 const runFuzzyAssessmentBtn = document.getElementById("runFuzzyAssessmentBtn");
 const fuzzyLoadingCard = document.getElementById("fuzzyLoadingCard");
 const fuzzyProgressFill = document.getElementById("fuzzyProgressFill");
@@ -582,12 +584,18 @@ const fuzzyAction = document.getElementById("fuzzyAction");
 const reasonStress = document.getElementById("reasonStress");
 const reasonUrgency = document.getElementById("reasonUrgency");
 const reasonSupport = document.getElementById("reasonSupport");
+const reasonIsolation = document.getElementById("reasonIsolation");
 const reasonSleep = document.getElementById("reasonSleep");
 const reasonEnergy = document.getElementById("reasonEnergy");
+const reasonIotRisk = document.getElementById("reasonIotRisk");
 const reasonRule = document.getElementById("reasonRule");
 const reasonFuzzy = document.getElementById("reasonFuzzy");
 const reasonFinal = document.getElementById("reasonFinal");
 const reasonCategory = document.getElementById("reasonCategory");
+const reasonQueue = document.getElementById("reasonQueue");
+const reasonWait = document.getElementById("reasonWait");
+const reasonAction = document.getElementById("reasonAction");
+const reasonExplain = document.getElementById("reasonExplain");
 const wellbeingAssessmentModal = document.getElementById("wellbeingAssessmentModal");
 const wellbeingModalBackdrop = document.getElementById("wellbeingModalBackdrop");
 const wellbeingModalOk = document.getElementById("wellbeingModalOk");
@@ -595,6 +603,18 @@ const modalRiskCategory = document.getElementById("modalRiskCategory");
 const modalQueue = document.getElementById("modalQueue");
 const modalWait = document.getElementById("modalWait");
 const modalPosition = document.getElementById("modalPosition");
+const agentDetection = document.getElementById("agentDetection");
+const agentDecision = document.getElementById("agentDecision");
+const agentPlanning = document.getElementById("agentPlanning");
+const agentSupport = document.getElementById("agentSupport");
+const pipelineSteps = document.querySelectorAll("[data-pipeline-step]");
+const iotHeartRate = document.getElementById("iotHeartRate");
+const iotSleepHours = document.getElementById("iotSleepHours");
+const iotActivity = document.getElementById("iotActivity");
+const iotStatus = document.getElementById("iotStatus");
+const iotRisk = document.getElementById("iotRisk");
+const minimaxStrategy = document.getElementById("minimaxStrategy");
+const minimaxReason = document.getElementById("minimaxReason");
 
 const dashboardInterviewScore = document.getElementById("dashboardInterviewScore");
 const dashboardResumeScore = document.getElementById("dashboardResumeScore");
@@ -673,6 +693,7 @@ const fuzzyRiskMaps = {
     "low-urgency": 0.3,
   },
   support: { alone: 0.9, some: 0.5, parents: 0.35, friends: 0.4, mentor: 0.3, strong: 0.2 },
+  isolation: { low: 0.2, medium: 0.5, high: 0.8 },
   energy: {
     happy: 0.2,
     calm: 0.2,
@@ -697,10 +718,13 @@ const fuzzyRiskProfiles = {
   low: {
     label: "LOW RISK",
     shortLabel: "LOW",
-    queue: "STANDARD JOB SUPPORT",
+    queue: "STANDARD SUPPORT",
     wait: "2-3 days",
-    positionRange: [12, 20],
+    position: "#18 in queue",
     action: "General career exploration and wellbeing guidance",
+    plan: "General career exploration, resume polish, and weekly progress tracking",
+    strategy: "General Support",
+    utility: "40 utility",
     emotionalState: "Good",
     dashboardStatus: "Good",
     dashboardBar: 35,
@@ -716,10 +740,13 @@ const fuzzyRiskProfiles = {
   medium: {
     label: "MEDIUM RISK",
     shortLabel: "MEDIUM",
-    queue: "PRIORITY JOB SUPPORT",
+    queue: "PRIORITY SUPPORT",
     wait: "12-24 hrs",
-    positionRange: [5, 9],
+    position: "#7 in queue",
     action: "Guided resume and job application support",
+    plan: "Guided resume review, job application support, and interview preparation",
+    strategy: "Guided Support",
+    utility: "70 utility",
     emotionalState: "Moderate Concern",
     dashboardStatus: "Moderate",
     dashboardBar: 60,
@@ -736,10 +763,13 @@ const fuzzyRiskProfiles = {
   high: {
     label: "HIGH RISK",
     shortLabel: "HIGH",
-    queue: "URGENT JOB SUPPORT",
-    wait: "Immediate",
-    positionRange: [1, 3],
+    queue: "URGENT SUPPORT",
+    wait: "0-2 hrs",
+    position: "#1 in queue",
     action: "Immediate job-matching and interview support",
+    plan: "Immediate AI job matching, interview preparation, and advisor escalation",
+    strategy: "Immediate Support",
+    utility: "90 utility",
     emotionalState: "High Concern",
     urgentState: "Urgent Support Needed",
     dashboardStatus: "Needs Support",
@@ -758,6 +788,37 @@ const fuzzyRiskProfiles = {
 
 let fuzzyAssessmentHasRun = false;
 let fuzzyAnimationFrame = null;
+let activeScenario = null;
+
+const wellbeingScenarios = {
+  ryan: {
+    stress: 9,
+    urgency: "fulltime-asap",
+    support: "alone",
+    isolation: "high",
+    sleep: "less-4",
+    mood: "overwhelmed",
+    iot: { heartRate: 105, sleepHours: 4, activity: "Low", status: "High stress signal", risk: 0.8 }
+  },
+  pinky: {
+    stress: 6,
+    urgency: "interview",
+    support: "some",
+    isolation: "medium",
+    sleep: "6-8",
+    mood: "worried",
+    iot: { heartRate: 88, sleepHours: 6, activity: "Medium", status: "Moderate signal", risk: 0.5 }
+  },
+  zarul: {
+    stress: 5,
+    urgency: "career-uncertain",
+    support: "some",
+    isolation: "medium",
+    sleep: "6-8",
+    mood: "confused",
+    iot: { heartRate: 76, sleepHours: 7, activity: "Medium", status: "Stable signal", risk: 0.2 }
+  }
+};
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
@@ -1903,7 +1964,7 @@ function classifyFuzzyRisk(risk) {
   if (risk < 0.4) {
     return "low";
   }
-  if (risk < 0.7) {
+  if (risk < 0.8) {
     return "medium";
   }
   return "high";
@@ -1920,9 +1981,33 @@ function getFuzzyWord(value) {
 }
 
 function getRandomQueuePosition(categoryKey) {
-  const [min, max] = fuzzyRiskProfiles[categoryKey].positionRange;
-  const position = Math.floor(Math.random() * (max - min + 1)) + min;
-  return `#${position} in queue`;
+  return fuzzyRiskProfiles[categoryKey].position;
+}
+
+function getIotSignals(level, sleepValue, moodValue) {
+  if (activeScenario && wellbeingScenarios[activeScenario]) {
+    return wellbeingScenarios[activeScenario].iot;
+  }
+
+  const sleepHours = { "less-4": 4, "4-6": 5, "6-8": 7, "8-plus": 8 }[sleepValue] || 7;
+  const highMoodRisk = ["anxious", "overwhelmed", "drained", "sad", "tired"].includes(moodValue);
+  const calmMood = ["happy", "calm", "relaxed", "motivated", "focused"].includes(moodValue);
+  const heartRate = clamp(Math.round(68 + level * 3 + (highMoodRisk ? 12 : 0) - (calmMood ? 4 : 0)), 64, 112);
+  const activity = level >= 8 || ["overwhelmed", "drained", "sleepy"].includes(moodValue) ? "Low" : level <= 3 ? "High" : "Medium";
+  const status = heartRate >= 100 ? "Elevated signal" : heartRate >= 86 ? "Moderate signal" : "Normal signal";
+  const iotRiskValue = Math.max(
+    level >= 8 ? 0.7 : level >= 5 ? 0.45 : 0.25,
+    sleepValue === "less-4" ? 0.8 : sleepValue === "4-6" ? 0.55 : 0.2,
+    highMoodRisk ? 0.7 : calmMood ? 0.2 : 0.4
+  );
+
+  return {
+    heartRate,
+    sleepHours,
+    activity,
+    status,
+    risk: Number(clamp(iotRiskValue, 0.2, 0.9).toFixed(2))
+  };
 }
 
 function calculateFuzzyAssessment(level = getActiveStressLevel()) {
@@ -1930,17 +2015,20 @@ function calculateFuzzyAssessment(level = getActiveStressLevel()) {
   const urgencyValue = wellbeingPressure ? wellbeingPressure.value : "interview";
   const energyValue = wellbeingEnergy ? wellbeingEnergy.value : "neutral";
   const supportValue = wellbeingSupport ? wellbeingSupport.value : "some";
+  const isolationValue = wellbeingIsolation ? wellbeingIsolation.value : "medium";
 
   const stressRisk = clamp(level / 10, 0, 1);
   const urgencyRisk = fuzzyRiskMaps.urgency[urgencyValue] || 0.6;
   const supportRisk = fuzzyRiskMaps.support[supportValue] || 0.5;
+  const isolationRisk = fuzzyRiskMaps.isolation[isolationValue] || 0.5;
   const energyRisk = fuzzyRiskMaps.energy[energyValue] || 0.4;
   const sleepRisk = fuzzyRiskMaps.sleep[sleepValue] || 0.3;
+  const iot = getIotSignals(level, sleepValue, energyValue);
 
   // Fuzzy logic demo calculation: stress and job urgency use min(),
-  // then lack of support, sleep, and mood compete through max().
+  // then lack of support, social isolation, sleep, and mood compete through max().
   const stressUrgencyRisk = Math.min(stressRisk, urgencyRisk);
-  const risk = Number(Math.max(stressUrgencyRisk, supportRisk, sleepRisk, energyRisk).toFixed(2));
+  const risk = Number(Math.max(stressUrgencyRisk, supportRisk, isolationRisk, sleepRisk, energyRisk).toFixed(2));
   const categoryKey = classifyFuzzyRisk(risk);
   const profile = fuzzyRiskProfiles[categoryKey];
   const emotionalState = categoryKey === "high" && risk >= 0.85 ? profile.urgentState : profile.emotionalState;
@@ -1952,11 +2040,15 @@ function calculateFuzzyAssessment(level = getActiveStressLevel()) {
     urgencyValue,
     energyValue,
     supportValue,
+    isolationValue,
     stressRisk,
     urgencyRisk,
     supportRisk,
+    isolationRisk,
     energyRisk,
     sleepRisk,
+    iotRisk: iot.risk,
+    iot,
     stressUrgencyRisk,
     risk,
     categoryKey,
@@ -1983,6 +2075,43 @@ function updateAdviceForAssessment(assessment) {
   }
 }
 
+function updatePipelineState(isComplete) {
+  pipelineSteps.forEach((step) => {
+    step.classList.toggle("complete", Boolean(isComplete));
+  });
+}
+
+function updateIotCard(assessment) {
+  if (iotHeartRate) iotHeartRate.textContent = `${assessment.iot.heartRate} bpm`;
+  if (iotSleepHours) iotSleepHours.textContent = `${assessment.iot.sleepHours} hrs`;
+  if (iotActivity) iotActivity.textContent = assessment.iot.activity;
+  if (iotStatus) iotStatus.textContent = assessment.iot.status;
+  if (iotRisk) iotRisk.textContent = assessment.iotRisk.toFixed(2);
+}
+
+function updateAgentFlow(assessment) {
+  if (agentDetection) agentDetection.textContent = `Risk detected = ${assessment.risk.toFixed(2)}`;
+  if (agentDecision) agentDecision.textContent = `Category = ${assessment.shortLabel}`;
+  if (agentPlanning) agentPlanning.textContent = assessment.plan;
+  if (agentSupport) agentSupport.textContent = `${assessment.queue} · ${assessment.position}`;
+}
+
+function updateMinimaxStrategy(assessment) {
+  if (minimaxStrategy) {
+    minimaxStrategy.textContent = `Selected strategy: ${assessment.strategy} (${assessment.utility})`;
+  }
+  if (minimaxReason) {
+    minimaxReason.textContent = "Selected because this strategy gives the best support utility for the current risk level.";
+  }
+}
+
+function updateIntelligentShowcase(assessment, isComplete = false) {
+  updateIotCard(assessment);
+  updateAgentFlow(assessment);
+  updateMinimaxStrategy(assessment);
+  updatePipelineState(isComplete);
+}
+
 function renderReasoning(assessment) {
   if (!reasonStress) {
     return;
@@ -1990,18 +2119,26 @@ function renderReasoning(assessment) {
 
   const stressWord = getFuzzyWord(assessment.stressRisk);
   const urgencyWord = getFuzzyWord(assessment.urgencyRisk);
-  const minText = `min(${assessment.stressRisk.toFixed(2)}, ${assessment.urgencyRisk.toFixed(2)}) = ${assessment.stressUrgencyRisk.toFixed(2)}`;
-  const maxText = `max(${assessment.stressUrgencyRisk.toFixed(2)}, ${assessment.supportRisk.toFixed(2)}, ${assessment.sleepRisk.toFixed(2)}, ${assessment.energyRisk.toFixed(2)}) = ${assessment.risk.toFixed(2)}`;
+  const minText = `highRisk = min(${assessment.stressRisk.toFixed(2)}, ${assessment.urgencyRisk.toFixed(2)}) = ${assessment.stressUrgencyRisk.toFixed(2)}`;
+  const maxText = `finalRisk = max(${assessment.stressUrgencyRisk.toFixed(2)}, ${assessment.supportRisk.toFixed(2)}, ${assessment.isolationRisk.toFixed(2)}, ${assessment.sleepRisk.toFixed(2)}, ${assessment.energyRisk.toFixed(2)}) = ${assessment.risk.toFixed(2)}`;
 
   reasonStress.textContent = assessment.stressRisk.toFixed(2);
   reasonUrgency.textContent = assessment.urgencyRisk.toFixed(2);
   reasonSupport.textContent = assessment.supportRisk.toFixed(2);
+  if (reasonIsolation) reasonIsolation.textContent = assessment.isolationRisk.toFixed(2);
   if (reasonSleep) reasonSleep.textContent = assessment.sleepRisk.toFixed(2);
   if (reasonEnergy) reasonEnergy.textContent = assessment.energyRisk.toFixed(2);
+  if (reasonIotRisk) reasonIotRisk.textContent = assessment.iotRisk.toFixed(2);
   reasonRule.textContent = `IF stress ${stressWord} AND urgency ${urgencyWord} THEN risk ${assessment.shortLabel}`;
   reasonFuzzy.textContent = minText;
   reasonFinal.textContent = maxText;
   reasonCategory.textContent = assessment.shortLabel;
+  if (reasonQueue) reasonQueue.textContent = assessment.queue;
+  if (reasonWait) reasonWait.textContent = assessment.wait;
+  if (reasonAction) reasonAction.textContent = assessment.action;
+  if (reasonExplain) {
+    reasonExplain.textContent = `Based on the given stress, urgency, support, social isolation, sleep, mood, and IoT signals, the system assigned the user to ${assessment.queue} at ${assessment.position} because the final risk score is ${assessment.risk.toFixed(2)}.`;
+  }
 }
 
 function renderFuzzyResult(assessment, options = {}) {
@@ -2010,6 +2147,7 @@ function renderFuzzyResult(assessment, options = {}) {
 
   updateAdviceForAssessment(assessment);
   renderReasoning(assessment);
+  updateIntelligentShowcase(assessment, true);
 
   if (fuzzyResultCard) {
     fuzzyResultCard.classList.remove("is-low", "is-medium", "is-high");
@@ -2021,7 +2159,7 @@ function renderFuzzyResult(assessment, options = {}) {
     fuzzyCategoryBadge.textContent = assessment.shortLabel;
   }
   if (wellbeingSummary) {
-    wellbeingSummary.textContent = `${assessment.label} detected from career urgency, stress, support, sleep, and mood signals. PathWise AI recommends ${assessment.action}. ${assessment.explanation}`;
+    wellbeingSummary.textContent = `${assessment.label} detected from career urgency, stress, support, social isolation, sleep, mood, and IoT signals. PathWise AI recommends ${assessment.action}. ${assessment.explanation}`;
   }
   if (fuzzyRiskScore) fuzzyRiskScore.textContent = assessment.risk.toFixed(2);
   if (fuzzyRiskCategory) fuzzyRiskCategory.textContent = assessment.label;
@@ -2063,6 +2201,8 @@ function updateWellbeing(level) {
 
   if (fuzzyAssessmentHasRun) {
     renderFuzzyResult(assessment);
+  } else {
+    updateIntelligentShowcase(assessment, false);
   }
 }
 
@@ -2133,6 +2273,33 @@ function runFuzzyAssessment() {
   };
 
   fuzzyAnimationFrame = requestAnimationFrame(animate);
+}
+
+function clearActiveScenario() {
+  activeScenario = null;
+  scenarioButtons.forEach((button) => button.classList.remove("active"));
+}
+
+function applyWellbeingScenario(key) {
+  const scenario = wellbeingScenarios[key];
+  if (!scenario) {
+    return;
+  }
+
+  activeScenario = key;
+  scenarioButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.scenario === key);
+  });
+
+  if (stressRange) stressRange.value = scenario.stress;
+  if (wellbeingPressure) wellbeingPressure.value = scenario.urgency;
+  if (wellbeingSupport) wellbeingSupport.value = scenario.support;
+  if (wellbeingIsolation) wellbeingIsolation.value = scenario.isolation;
+  if (wellbeingSleep) wellbeingSleep.value = scenario.sleep;
+  if (wellbeingEnergy) wellbeingEnergy.value = scenario.mood;
+
+  updateWellbeing(getActiveStressLevel());
+  runFuzzyAssessment();
 }
 
 function tickClock() {
@@ -2242,19 +2409,30 @@ downloadResumePdfBtn.addEventListener("click", downloadResumePdf);
 recommendCareerBtn.addEventListener("click", renderCareerResults);
 
 stressButtons.forEach((button) => {
-  button.addEventListener("click", () => updateWellbeing(Number(button.dataset.level)));
+  button.addEventListener("click", () => {
+    clearActiveScenario();
+    updateWellbeing(Number(button.dataset.level));
+  });
 });
 
 if (stressRange) {
-  stressRange.addEventListener("input", () => updateWellbeing(getActiveStressLevel()));
+  stressRange.addEventListener("input", () => {
+    clearActiveScenario();
+    updateWellbeing(getActiveStressLevel());
+  });
 }
 
-[wellbeingSleep, wellbeingPressure, wellbeingEnergy, wellbeingSupport].forEach((field) => {
+[wellbeingSleep, wellbeingPressure, wellbeingEnergy, wellbeingSupport, wellbeingIsolation].forEach((field) => {
   if (field) {
     field.addEventListener("change", () => {
+      clearActiveScenario();
       updateWellbeing(getActiveStressLevel());
     });
   }
+});
+
+scenarioButtons.forEach((button) => {
+  button.addEventListener("click", () => applyWellbeingScenario(button.dataset.scenario));
 });
 
 if (runFuzzyAssessmentBtn) {
