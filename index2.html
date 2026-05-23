@@ -12,8 +12,8 @@
         margin-top: 18px;
         overflow: hidden;
         border: 1px solid rgba(107, 63, 242, 0.16);
-        border-radius: 24px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(247, 243, 255, 0.88));
+        border-radius: 26px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(247, 243, 255, 0.9));
         box-shadow: 0 18px 42px rgba(36, 19, 91, 0.08);
       }
 
@@ -22,9 +22,9 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 14px;
-        padding: 14px 18px;
+        padding: 16px 20px;
         border-bottom: 1px solid rgba(107, 63, 242, 0.12);
-        background: rgba(255, 255, 255, 0.82);
+        background: rgba(255, 255, 255, 0.86);
       }
 
       .swish-brand {
@@ -66,7 +66,7 @@
         padding: 8px 12px;
         border: 1px solid rgba(107, 63, 242, 0.16);
         border-radius: 12px;
-        background: rgba(255, 255, 255, 0.92);
+        background: rgba(255, 255, 255, 0.94);
         color: var(--muted);
         font-weight: 800;
         font-size: 0.9rem;
@@ -120,36 +120,30 @@
         display: none;
       }
 
-      .swish-status {
-        padding: 8px 12px;
-        border-radius: 999px;
-        background: rgba(72, 199, 142, 0.12);
-        color: #128852;
-        font-size: 0.8rem;
-        font-weight: 900;
-      }
-
-      .swish-status.offline {
-        background: rgba(245, 165, 36, 0.16);
-        color: #9a5a00;
-      }
-
       .swish-demo-body {
         display: grid;
-        grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
-        min-height: 900px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        height: clamp(560px, 62vw, 640px);
+        max-width: 100%;
       }
 
       .swish-editor,
       .swish-console {
         min-width: 0;
+        min-height: 0;
       }
 
       .swish-editor {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
         border-right: 1px solid rgba(107, 63, 242, 0.14);
         background: #fff;
+      }
+
+      .swish-console {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        background: rgba(255, 252, 248, 0.88);
       }
 
       .swish-pane-head {
@@ -169,15 +163,19 @@
         text-transform: uppercase;
       }
 
+      .swish-pane-head small {
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 700;
+      }
+
       .swish-program {
         display: block;
-        flex: 1;
         width: 100%;
         height: 100%;
-        min-height: 820px;
-        max-height: none;
+        min-height: 0;
         margin: 0;
-        padding: 16px;
+        padding: 18px;
         border: 0;
         overflow: auto;
         color: #0015af;
@@ -186,43 +184,10 @@
           #fff;
         font-family: "Consolas", "Courier New", monospace;
         font-size: 0.86rem;
-        line-height: 1.55;
+        line-height: 1.58;
         white-space: pre;
-        resize: vertical;
+        resize: none;
         box-sizing: border-box;
-      }
-
-      .swish-console {
-        display: grid;
-        grid-template-rows: auto minmax(770px, 1fr) auto;
-        background: rgba(255, 252, 248, 0.88);
-      }
-
-      .swish-report-output {
-        min-height: 770px;
-        margin: 0;
-        padding: 18px;
-        overflow: auto;
-        color: #8a3700;
-        font-family: "Consolas", "Courier New", monospace;
-        font-size: 0.92rem;
-        line-height: 1.55;
-        white-space: pre-wrap;
-      }
-
-      .swish-query-bar {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        gap: 10px;
-        align-items: center;
-        padding: 14px;
-        border-top: 1px solid rgba(107, 63, 242, 0.12);
-        background: rgba(255, 255, 255, 0.9);
-      }
-
-      .swish-query-bar code {
-        color: #090536;
-        font-weight: 900;
       }
 
       .swish-program:focus {
@@ -231,9 +196,121 @@
         box-shadow: inset 0 0 0 2px rgba(107, 63, 242, 0.18);
       }
 
+      .swish-results-shell {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        min-height: 0;
+        padding: 16px;
+        gap: 12px;
+      }
+
+      .swish-empty-state {
+        padding: 18px;
+        border: 1px dashed rgba(107, 63, 242, 0.2);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.82);
+        color: #8a3700;
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+      }
+
+      .swish-results-list {
+        display: grid;
+        align-content: start;
+        gap: 14px;
+        min-height: 0;
+        overflow: auto;
+        padding-right: 2px;
+      }
+
+      .swish-result-card {
+        display: grid;
+        gap: 10px;
+        padding: 14px 16px 16px;
+        border: 1px solid rgba(107, 63, 242, 0.14);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 10px 24px rgba(36, 19, 91, 0.06);
+      }
+
+      .swish-result-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .swish-result-query {
+        color: #1a155a;
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 0.96rem;
+        font-weight: 900;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+      }
+
+      .swish-result-close {
+        flex: 0 0 auto;
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(107, 63, 242, 0.16);
+        border-radius: 999px;
+        background: rgba(247, 243, 255, 0.95);
+        color: var(--muted);
+        font-size: 1rem;
+        font-weight: 900;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .swish-result-close:hover {
+        color: #4b16c9;
+        box-shadow: 0 8px 18px rgba(107, 63, 242, 0.12);
+      }
+
+      .swish-result-body {
+        margin: 0;
+        color: #8a3700;
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 0.92rem;
+        line-height: 1.58;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+
+      .swish-storage-message {
+        min-height: 1.2em;
+        margin: 0 14px 12px;
+        color: #128852;
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+
+      .swish-storage-message.is-error {
+        color: #9a5a00;
+      }
+
+      .swish-query-bar {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+        padding: 14px;
+        border-top: 1px solid rgba(107, 63, 242, 0.12);
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .swish-query-bar code {
+        color: #090536;
+        font-weight: 900;
+      }
+
       .swish-query-bar select,
       .swish-query-bar input {
         width: 100%;
+        min-width: 0;
         padding: 12px 14px;
         border: 1px solid rgba(107, 63, 242, 0.18);
         border-radius: 14px;
@@ -434,7 +511,7 @@
       @media (max-width: 900px) {
         .swish-demo-body {
           grid-template-columns: 1fr;
-          min-height: auto;
+          height: auto;
         }
 
         .swish-editor {
@@ -443,16 +520,16 @@
         }
 
         .swish-program {
-          min-height: 560px;
-          height: 560px;
+          min-height: 380px;
+          height: 380px;
         }
 
-        .swish-console {
-          grid-template-rows: auto minmax(420px, 1fr) auto;
+        .swish-results-list {
+          max-height: 360px;
         }
 
-        .swish-report-output {
-          min-height: 420px;
+        .swish-results-shell {
+          min-height: 360px;
         }
 
         .swish-query-bar {
@@ -1006,16 +1083,18 @@
                     <span>Output</span>
                     <small>Editable SWISH-style Prolog output with local save support</small>
                   </div>
-                  <pre class="swish-report-output" id="swishReportOutput">Type a Prolog query and press Run.
+                  <div class="swish-results-shell">
+                    <div class="swish-empty-state" id="swishEmptyState">Run a Prolog query to create a SWISH-style result card.
 
 Suggested report queries:
-- multi_agent_report(zarul).
-- strategy_report(pinky).
-- explain_decision(ryan).
-- iot_report(ryan).
-- final_summary(ryan).
-
-Use File -> Save to keep your latest code in this browser.</pre>
+- final_summary(zarul).
+- multi_agent_report(ryan).
+- queue_priority(Person, Queue, WaitTime, Position, Action).
+- stress(ryan, Degree).
+- iot_report(ryan).</div>
+                    <div class="swish-results-list" id="swishResultsPanel" aria-live="polite"></div>
+                  </div>
+                  <p class="swish-storage-message" id="swishStorageMessage" aria-live="polite"></p>
                   <div class="swish-query-bar">
                     <code>?-</code>
                     <input id="swishQueryInput" type="text" value="final_summary(zarul)." aria-label="Type Prolog query" />
@@ -1593,7 +1672,9 @@ Active university tech club member</textarea>
         const swishDownloadBtn = document.getElementById("swishDownloadBtn");
         const swishQueryInput = document.getElementById("swishQueryInput");
         const swishProgramCode = document.getElementById("swishProgramCode");
-        const swishReportOutput = document.getElementById("swishReportOutput");
+        const swishResultsPanel = document.getElementById("swishResultsPanel");
+        const swishEmptyState = document.getElementById("swishEmptyState");
+        const swishStorageMessage = document.getElementById("swishStorageMessage");
         const swishBackendStatus = document.getElementById("swishBackendStatus");
         const swishFileMenuButton = document.getElementById("swishFileMenuButton");
         const swishFileDropdown = document.getElementById("swishFileDropdown");
@@ -1947,17 +2028,146 @@ final_summary(Person) :-
           return formatAtomValue(String(value));
         }
 
-        function formatBindingOutput(query, rows) {
+        function formatBindingOutput(rows) {
           if (!rows.length) {
-            return `?- ${query}\n\nfalse`;
+            return "false";
           }
 
-          return `?- ${query}\n\n${rows.map((row) => row.join(",\n")).join(" ;\n\n")}\n\ntrue`;
+          const nonEmptyRows = rows.filter((row) => row.length);
+
+          if (!nonEmptyRows.length) {
+            return "true";
+          }
+
+          return `${nonEmptyRows.map((row) => row.join("\n")).join("\n\n;\n\n")}\n\ntrue`;
+        }
+
+        function formatReportOutput(lines) {
+          return `${lines.join("\n")}\ntrue`;
         }
 
         function parseQueryArgs(query, predicate) {
           const match = query.match(new RegExp(`^${predicate}\\s*\\((.*)\\)\\.$`, "i"));
           return match ? match[1].split(",").map((item) => item.trim()) : null;
+        }
+
+        function matchesLiteral(token, value) {
+          const normalized = normalizeToken(token);
+
+          if (typeof value === "number") {
+            return Number(normalized) === value;
+          }
+
+          return normalized.toLowerCase() === String(value).toLowerCase();
+        }
+
+        function resolveQueryPersons(personToken) {
+          if (isVariable(personToken)) {
+            return getAllPersons();
+          }
+
+          const normalized = normalizeToken(personToken).toLowerCase();
+          return getAllPersons().includes(normalized) ? [normalized] : [];
+        }
+
+        function formatSingleValueResult(outputToken, value) {
+          if (isVariable(outputToken)) {
+            return formatBindingOutput([[`${outputToken} = ${formatValue(value)}`]]);
+          }
+
+          return matchesLiteral(outputToken, value) ? "true" : "false";
+        }
+
+        function buildPersonValueRows(personToken, outputToken, resolver) {
+          const rows = [];
+
+          resolveQueryPersons(personToken).forEach((personName) => {
+            const state = getComputedState(personName);
+            const resolvedValue = resolver(state);
+            const row = [];
+            let isMatch = true;
+
+            if (isVariable(personToken)) {
+              row.push(`${personToken} = ${formatValue(personName)}`);
+            }
+
+            if (isVariable(outputToken)) {
+              row.push(`${outputToken} = ${formatValue(resolvedValue)}`);
+            } else if (!matchesLiteral(outputToken, resolvedValue)) {
+              isMatch = false;
+            }
+
+            if (isMatch) {
+              rows.push(row);
+            }
+          });
+
+          return rows;
+        }
+
+        function buildStructuredRows(personToken, outputTokens, resolver) {
+          const rows = [];
+
+          resolveQueryPersons(personToken).forEach((personName) => {
+            const state = getComputedState(personName);
+            const values = resolver(state);
+            const row = [];
+            let isMatch = true;
+
+            if (isVariable(personToken)) {
+              row.push(`${personToken} = ${formatValue(personName)}`);
+            }
+
+            outputTokens.forEach((token, index) => {
+              const value = values[index];
+
+              if (isVariable(token)) {
+                row.push(`${token} = ${formatValue(value)}`);
+              } else if (!matchesLiteral(token, value)) {
+                isMatch = false;
+              }
+            });
+
+            if (isMatch) {
+              rows.push(row);
+            }
+          });
+
+          return rows;
+        }
+
+        function buildMultiSolutionRows(personToken, outputTokens, resolver) {
+          const rows = [];
+
+          resolveQueryPersons(personToken).forEach((personName) => {
+            const state = getComputedState(personName);
+            const solutions = resolver(state);
+
+            solutions.forEach((values) => {
+              const row = [];
+              let isMatch = true;
+
+              if (isVariable(personToken)) {
+                row.push(`${personToken} = ${formatValue(personName)}`);
+              }
+
+              outputTokens.forEach((token, index) => {
+                const value = values[index];
+
+                if (isVariable(token)) {
+                  row.push(`${token} = ${formatValue(value)}`);
+                } else if (!matchesLiteral(token, value)) {
+                  isMatch = false;
+                }
+              });
+
+              if (isMatch) {
+                rows.push(row);
+              }
+            });
+          });
+
+          return rows;
         }
 
         function parseNumericFacts(predicate) {
@@ -2201,202 +2411,204 @@ final_summary(Person) :-
           };
         }
 
-        function formatMultiAgentReport(query, state) {
-          return `?- ${query}
-
-Multi-Agent Decision Making Report
-User: ${state.person}
-Detection Agent: Detected fuzzy risk score is ${formatValue(state.finalRisk)}
-Decision Agent: Classified the user as ${state.category} risk
-Planning Agent: Suggested action plan is ${state.planningPlan}
-Support Agent: Assigned ${state.queueAssignment.queue}, ${state.queueAssignment.position}, response time ${state.queueAssignment.waitTime}
-Final Support Action: ${state.queueAssignment.action}
-
-true`;
+        function formatMultiAgentReport(state) {
+          return formatReportOutput([
+            "Multi-Agent Decision Making Report",
+            `User: ${state.person}`,
+            `Detection Agent: Detected fuzzy risk score is ${formatValue(state.finalRisk)}`,
+            `Decision Agent: Classified the user as ${state.category} risk`,
+            `Planning Agent: Suggested action plan is ${state.planningPlan}`,
+            `Support Agent: Assigned ${state.queueAssignment.queue}, ${state.queueAssignment.position}, response time ${state.queueAssignment.waitTime}`,
+            `Final Support Action: ${state.queueAssignment.action}`,
+            ""
+          ]);
         }
 
-        function formatStrategyReport(query, state) {
+        function formatStrategyReport(state) {
           const selected = state.bestStrategies[0];
-          return `?- ${query}
-
-Strategic Decision-Making Report
-User: ${state.person}
-Selected strategy: ${selected.strategy}
-Resource condition: ${selected.constraint}
-Final utility score: ${formatValue(selected.utility)}
-Reason: The strategy was selected by comparing risk level, support priority, and resource constraint.
-
-true`;
+          return formatReportOutput([
+            "Strategic Decision-Making Report",
+            `User: ${state.person}`,
+            `Selected strategy: ${selected.strategy}`,
+            `Resource condition: ${selected.constraint}`,
+            `Final utility score: ${formatValue(selected.utility)}`,
+            "Reason: The strategy was selected by comparing risk level, support priority, and resource constraint.",
+            ""
+          ]);
         }
 
-        function formatExplainDecision(query, state) {
-          return `?- ${query}
-
-User: ${state.person}
-Risk score: ${formatValue(state.finalRisk)}
-Risk category: ${state.category}
-Assigned queue: '${state.queueAssignment.queue}'
-Reason: Decision based on stress, urgency, support level, and social isolation.
-
-true`;
+        function formatExplainDecision(state) {
+          return formatReportOutput([
+            `User: ${state.person}`,
+            `Risk score: ${formatValue(state.finalRisk)}`,
+            `Risk category: ${state.category}`,
+            `Assigned queue: ${state.queueAssignment.queue}`,
+            "Reason: Decision based on stress, urgency, support level, and social isolation.",
+            ""
+          ]);
         }
 
-        function formatIotReport(query, state) {
-          return `?- ${query}
-
-IoT Integration Report
-User: ${state.person}
-Sleep hours: ${formatValue(state.payload.sleepHours)}
-Heart rate: ${formatValue(state.payload.heartRate)}
-Estimated stress impact: ${formatValue(state.iotRisk)}
-Updated final risk score: ${formatValue(state.finalRiskWithIot)}
-Reason: Poor sleep and abnormal heart rate may increase stress and support priority.
-
-true`;
+        function formatIotReport(state) {
+          return formatReportOutput([
+            "IoT Integration Report",
+            `User: ${state.person}`,
+            `Sleep hours: ${formatValue(state.payload.sleepHours)}`,
+            `Heart rate: ${formatValue(state.payload.heartRate)}`,
+            `Estimated stress impact: ${formatValue(state.iotRisk)}`,
+            `Updated final risk score: ${formatValue(state.finalRiskWithIot)}`,
+            "Reason: Poor sleep and abnormal heart rate may increase stress and support priority.",
+            ""
+          ]);
         }
 
-        function formatFinalSummary(query, state) {
+        function formatFinalSummary(state) {
           const selected = state.bestStrategies[0];
-          return `?- ${query}
-
-Final AI Support Summary
-User: ${state.person}
-Risk score: ${formatValue(state.finalRisk)}
-Risk category: ${state.category}
-Support priority: '${state.queueAssignment.queue}'
-Recommended strategy: ${selected.strategy}
-Updated risk with IoT: ${formatValue(state.finalRiskWithIot)}
-Decision explained using XAI principles.
-
-true`;
+          return formatReportOutput([
+            "Final AI Support Summary",
+            `User: ${state.person}`,
+            `Risk score: ${formatValue(state.finalRisk)}`,
+            `Risk category: ${state.category}`,
+            `Support priority: ${state.queueAssignment.queue}`,
+            `Recommended strategy: ${selected.strategy}`,
+            `Updated risk with IoT: ${formatValue(state.finalRiskWithIot)}`,
+            "Decision explained using XAI principles.",
+            ""
+          ]);
         }
 
         function formatQueryResult(query, person) {
           const state = getComputedState(person);
           const normalized = query.toLowerCase();
 
-          const simpleNumericPredicates = [
-            { predicate: "stress", value: state.payload.stress, variable: "Degree" },
-            { predicate: "urgency", value: state.payload.urgency, variable: "Degree" },
-            { predicate: "no_support", value: state.payload.support, variable: "Degree" },
-            { predicate: "support_risk", value: state.payload.support, variable: "Degree" },
-            { predicate: "social_isolation", value: state.payload.isolation, variable: "Degree" },
-            { predicate: "isolation_risk", value: state.payload.isolation, variable: "Degree" },
-            { predicate: "high_risk", value: state.highRisk, variable: "Degree" },
-            { predicate: "final_risk", value: state.finalRisk, variable: "Degree" },
-            { predicate: "heart_rate", value: state.payload.heartRate, variable: "HR" },
-            { predicate: "sleep_hours", value: state.payload.sleepHours, variable: "Sleep" },
-            { predicate: "iot_risk", value: state.iotRisk, variable: "Score" },
-            { predicate: "final_risk_with_iot", value: state.finalRiskWithIot, variable: "FinalScore" }
+          const personValuePredicates = [
+            { predicate: "stress", defaultVar: "Degree", resolver: (item) => item.payload.stress },
+            { predicate: "urgency", defaultVar: "Degree", resolver: (item) => item.payload.urgency },
+            { predicate: "no_support", defaultVar: "Degree", resolver: (item) => item.payload.support },
+            { predicate: "support_risk", defaultVar: "Degree", resolver: (item) => item.payload.support },
+            { predicate: "social_isolation", defaultVar: "Degree", resolver: (item) => item.payload.isolation },
+            { predicate: "isolation_risk", defaultVar: "Degree", resolver: (item) => item.payload.isolation },
+            { predicate: "high_risk", defaultVar: "Degree", resolver: (item) => item.highRisk },
+            { predicate: "final_risk", defaultVar: "Degree", resolver: (item) => item.finalRisk },
+            { predicate: "risk_category", defaultVar: "Category", resolver: (item) => item.category },
+            { predicate: "detection_agent", defaultVar: "Score", resolver: (item) => item.finalRisk },
+            { predicate: "decision_agent", defaultVar: "Category", resolver: (item) => item.category },
+            { predicate: "planning_agent", defaultVar: "Plan", resolver: (item) => item.planningPlan },
+            { predicate: "candidate_strategy", defaultVar: "Strategy", resolver: (item) => item.candidateStrategy },
+            { predicate: "heart_rate", defaultVar: "HR", resolver: (item) => item.payload.heartRate },
+            { predicate: "sleep_hours", defaultVar: "Sleep", resolver: (item) => item.payload.sleepHours },
+            { predicate: "activity_level", defaultVar: "Activity", resolver: (item) => item.payload.activity },
+            { predicate: "iot_risk", defaultVar: "Score", resolver: (item) => item.iotRisk },
+            { predicate: "final_risk_with_iot", defaultVar: "FinalScore", resolver: (item) => item.finalRiskWithIot }
           ];
 
-          for (const item of simpleNumericPredicates) {
+          for (const item of personValuePredicates) {
             const args = parseQueryArgs(query, item.predicate);
-            if (args) {
-              const requestedPerson = normalizeToken(args[0]).toLowerCase();
-              const requestedState = getComputedState(requestedPerson);
-              const resolvedValue = item.predicate === "stress" ? requestedState.payload.stress
-                : item.predicate === "urgency" ? requestedState.payload.urgency
-                  : item.predicate === "no_support" || item.predicate === "support_risk" ? requestedState.payload.support
-                    : item.predicate === "social_isolation" || item.predicate === "isolation_risk" ? requestedState.payload.isolation
-                      : item.predicate === "high_risk" ? requestedState.highRisk
-                        : item.predicate === "final_risk" ? requestedState.finalRisk
-                          : item.predicate === "heart_rate" ? requestedState.payload.heartRate
-                            : item.predicate === "sleep_hours" ? requestedState.payload.sleepHours
-                              : item.predicate === "iot_risk" ? requestedState.iotRisk
-                                : requestedState.finalRiskWithIot;
-              const outputVar = args[1] || item.variable;
-              return isVariable(outputVar)
-                ? formatBindingOutput(query, [[`${outputVar} = ${formatValue(resolvedValue)}`]])
-                : `?- ${query}\n\n${Number(normalizeToken(outputVar)) === resolvedValue ? "true" : "false"}`;
+            if (args && args.length === 2) {
+              return formatBindingOutput(
+                buildPersonValueRows(args[0], args[1] || item.defaultVar, item.resolver)
+              );
             }
-          }
-
-          const activityArgs = parseQueryArgs(query, "activity_level");
-          if (activityArgs) {
-            const requestedPerson = normalizeToken(activityArgs[0]).toLowerCase();
-            const requestedState = getComputedState(requestedPerson);
-            const outputVar = activityArgs[1] || "Activity";
-            return isVariable(outputVar)
-              ? formatBindingOutput(query, [[`${outputVar} = ${formatValue(requestedState.payload.activity)}`]])
-              : `?- ${query}\n\n${normalizeToken(outputVar).toLowerCase() === requestedState.payload.activity ? "true" : "false"}`;
           }
 
           const fuzzyAndArgs = parseQueryArgs(query, "fuzzy_and");
           if (fuzzyAndArgs && fuzzyAndArgs.length === 3) {
             const result = Math.min(Number(fuzzyAndArgs[0]), Number(fuzzyAndArgs[1]));
-            return formatBindingOutput(query, [[`${fuzzyAndArgs[2]} = ${formatValue(result)}`]]);
+            return formatSingleValueResult(fuzzyAndArgs[2], result);
           }
 
           const fuzzyOrArgs = parseQueryArgs(query, "fuzzy_or");
           if (fuzzyOrArgs && fuzzyOrArgs.length === 3) {
             const result = Math.max(Number(fuzzyOrArgs[0]), Number(fuzzyOrArgs[1]));
-            return formatBindingOutput(query, [[`${fuzzyOrArgs[2]} = ${formatValue(result)}`]]);
+            return formatSingleValueResult(fuzzyOrArgs[2], result);
           }
 
           const queueArgs = parseQueryArgs(query, "queue_priority");
           if (queueArgs && queueArgs.length === 5) {
-            const rows = getAllPersons().map((name) => {
-              const item = getComputedState(name);
-              return [
-                `${queueArgs[0]} = ${formatValue(name)}`,
-                `${queueArgs[1]} = ${formatValue(item.queueAssignment.queue)}`,
-                `${queueArgs[2]} = ${formatValue(item.queueAssignment.waitTime)}`,
-                `${queueArgs[3]} = ${formatValue(item.queueAssignment.position)}`,
-                `${queueArgs[4]} = ${formatValue(item.queueAssignment.action)}`
-              ];
-            });
-            return formatBindingOutput(query, rows);
+            return formatBindingOutput(
+              buildStructuredRows(
+                queueArgs[0],
+                queueArgs.slice(1),
+                (item) => [
+                  item.queueAssignment.queue,
+                  item.queueAssignment.waitTime,
+                  item.queueAssignment.position,
+                  item.queueAssignment.action
+                ]
+              )
+            );
           }
 
           const agentArgs = parseQueryArgs(query, "agent");
           if (agentArgs && agentArgs.length === 1) {
-            return formatBindingOutput(query, getAgentList().map((agentName) => [`${agentArgs[0]} = ${formatValue(agentName)}`]));
-          }
-
-          const detectionArgs = parseQueryArgs(query, "detection_agent");
-          if (detectionArgs && detectionArgs.length === 2) {
-            const requestedState = getComputedState(normalizeToken(detectionArgs[0]).toLowerCase());
-            return formatBindingOutput(query, [[`${detectionArgs[1]} = ${formatValue(requestedState.finalRisk)}`]]);
-          }
-
-          const decisionArgs = parseQueryArgs(query, "decision_agent");
-          if (decisionArgs && decisionArgs.length === 2) {
-            const requestedState = getComputedState(normalizeToken(decisionArgs[0]).toLowerCase());
-            return formatBindingOutput(query, [[`${decisionArgs[1]} = ${formatValue(requestedState.category)}`]]);
-          }
-
-          const planningArgs = parseQueryArgs(query, "planning_agent");
-          if (planningArgs && planningArgs.length === 2) {
-            const requestedState = getComputedState(normalizeToken(planningArgs[0]).toLowerCase());
-            return formatBindingOutput(query, [[`${planningArgs[1]} = ${formatValue(requestedState.planningPlan)}`]]);
+            return formatBindingOutput(
+              getAgentList().map((agentName) => (
+                isVariable(agentArgs[0]) ? [`${agentArgs[0]} = ${formatValue(agentName)}`] : []
+              ))
+            );
           }
 
           const supportArgs = parseQueryArgs(query, "support_agent");
           if (supportArgs && supportArgs.length === 5) {
-            const requestedState = getComputedState(normalizeToken(supportArgs[0]).toLowerCase());
-            return formatBindingOutput(query, [[
-              `${supportArgs[1]} = ${formatValue(requestedState.queueAssignment.queue)}`,
-              `${supportArgs[2]} = ${formatValue(requestedState.queueAssignment.waitTime)}`,
-              `${supportArgs[3]} = ${formatValue(requestedState.queueAssignment.position)}`,
-              `${supportArgs[4]} = ${formatValue(requestedState.queueAssignment.action)}`
-            ]]);
+            return formatBindingOutput(
+              buildStructuredRows(
+                supportArgs[0],
+                supportArgs.slice(1),
+                (item) => [
+                  item.queueAssignment.queue,
+                  item.queueAssignment.waitTime,
+                  item.queueAssignment.position,
+                  item.queueAssignment.action
+                ]
+              )
+            );
           }
 
           const resourceArgs = parseQueryArgs(query, "resource_option");
           if (resourceArgs && resourceArgs.length === 2) {
-            return formatBindingOutput(query, getResourceOptions().map((item) => [
-              `${resourceArgs[0]} = ${formatValue(item.name)}`,
-              `${resourceArgs[1]} = ${formatValue(item.value)}`
-            ]));
+            const rows = getResourceOptions().map((item) => {
+              const row = [];
+              let isMatch = true;
+
+              if (isVariable(resourceArgs[0])) {
+                row.push(`${resourceArgs[0]} = ${formatValue(item.name)}`);
+              } else if (!matchesLiteral(resourceArgs[0], item.name)) {
+                isMatch = false;
+              }
+
+              if (isVariable(resourceArgs[1])) {
+                row.push(`${resourceArgs[1]} = ${formatValue(item.value)}`);
+              } else if (!matchesLiteral(resourceArgs[1], item.value)) {
+                isMatch = false;
+              }
+
+              return isMatch ? row : null;
+            }).filter(Boolean);
+
+            return formatBindingOutput(rows);
           }
 
           const constraintArgs = parseQueryArgs(query, "constraint");
           if (constraintArgs && constraintArgs.length === 2) {
-            return formatBindingOutput(query, getConstraintList().map((item) => [
-              `${constraintArgs[0]} = ${formatValue(item.name)}`,
-              `${constraintArgs[1]} = ${formatValue(item.value)}`
-            ]));
+            const rows = getConstraintList().map((item) => {
+              const row = [];
+              let isMatch = true;
+
+              if (isVariable(constraintArgs[0])) {
+                row.push(`${constraintArgs[0]} = ${formatValue(item.name)}`);
+              } else if (!matchesLiteral(constraintArgs[0], item.name)) {
+                isMatch = false;
+              }
+
+              if (isVariable(constraintArgs[1])) {
+                row.push(`${constraintArgs[1]} = ${formatValue(item.value)}`);
+              } else if (!matchesLiteral(constraintArgs[1], item.value)) {
+                isMatch = false;
+              }
+
+              return isMatch ? row : null;
+            }).filter(Boolean);
+
+            return formatBindingOutput(rows);
           }
 
           const utilityArgs = parseQueryArgs(query, "strategy_utility");
@@ -2407,57 +2619,48 @@ true`;
             const penalty = getConstraintList().find((item) => item.name === constraint)?.value;
 
             if (typeof baseUtility === "number" && typeof penalty === "number") {
-              return formatBindingOutput(query, [[`${utilityArgs[2]} = ${formatValue(baseUtility - penalty)}`]]);
+              return formatSingleValueResult(utilityArgs[2], baseUtility - penalty);
             }
-          }
 
-          const candidateArgs = parseQueryArgs(query, "candidate_strategy");
-          if (candidateArgs && candidateArgs.length === 2) {
-            const requestedState = getComputedState(normalizeToken(candidateArgs[0]).toLowerCase());
-            return formatBindingOutput(query, [[`${candidateArgs[1]} = ${formatValue(requestedState.candidateStrategy)}`]]);
+            return "false";
           }
 
           const bestArgs = parseQueryArgs(query, "best_strategy");
           if (bestArgs && bestArgs.length === 4) {
-            const requestedState = getComputedState(normalizeToken(bestArgs[0]).toLowerCase());
-            return formatBindingOutput(query, requestedState.bestStrategies.map((item) => [
-              `${bestArgs[1]} = ${formatValue(item.strategy)}`,
-              `${bestArgs[2]} = ${formatValue(item.constraint)}`,
-              `${bestArgs[3]} = ${formatValue(item.utility)}`
-            ]));
+            return formatBindingOutput(
+              buildMultiSolutionRows(
+                bestArgs[0],
+                bestArgs.slice(1),
+                (item) => item.bestStrategies.map((strategyItem) => [
+                  strategyItem.strategy,
+                  strategyItem.constraint,
+                  strategyItem.utility
+                ])
+              )
+            );
           }
 
           if (normalized.startsWith("multi_agent_report(")) {
-            return formatMultiAgentReport(query, state);
+            return formatMultiAgentReport(state);
           }
 
           if (normalized.startsWith("strategy_report(")) {
-            return formatStrategyReport(query, state);
+            return formatStrategyReport(state);
           }
 
           if (normalized.startsWith("explain_decision(")) {
-            return formatExplainDecision(query, state);
+            return formatExplainDecision(state);
           }
 
           if (normalized.startsWith("iot_report(")) {
-            return formatIotReport(query, state);
+            return formatIotReport(state);
           }
 
           if (normalized.startsWith("final_summary(")) {
-            return formatFinalSummary(query, state);
+            return formatFinalSummary(state);
           }
 
-          return `?- ${query}
-
-This SWISH editor currently supports the project queries for:
-stress, urgency, no_support, fuzzy_and, fuzzy_or, high_risk, final_risk,
-queue_priority, agent, detection_agent, decision_agent, planning_agent,
-support_agent, multi_agent_report, resource_option, constraint,
-strategy_utility, candidate_strategy, best_strategy, strategy_report,
-explain_decision, heart_rate, sleep_hours, activity_level, iot_risk,
-final_risk_with_iot, iot_report, and final_summary.
-
-false`;
+          return "false";
         }
 
         function loadSavedSwishProgram() {
@@ -2470,17 +2673,65 @@ false`;
           }
         }
 
+        function setSwishStorageMessage(message, isError = false) {
+          if (!swishStorageMessage) {
+            return;
+          }
+
+          swishStorageMessage.textContent = message;
+          swishStorageMessage.classList.toggle("is-error", Boolean(isError));
+        }
+
+        function updateSwishEmptyState() {
+          if (!swishEmptyState || !swishResultsPanel) {
+            return;
+          }
+
+          swishEmptyState.hidden = swishResultsPanel.childElementCount > 0;
+        }
+
+        function appendSwishResultCard(query, output) {
+          if (!swishResultsPanel) {
+            return;
+          }
+
+          const card = document.createElement("article");
+          card.className = "swish-result-card";
+
+          const header = document.createElement("div");
+          header.className = "swish-result-card-header";
+
+          const queryLabel = document.createElement("div");
+          queryLabel.className = "swish-result-query";
+          queryLabel.textContent = `?- ${query}`;
+
+          const closeButton = document.createElement("button");
+          closeButton.className = "swish-result-close";
+          closeButton.type = "button";
+          closeButton.textContent = "×";
+          closeButton.setAttribute("aria-label", `Remove result for ${query}`);
+          closeButton.addEventListener("click", () => {
+            card.remove();
+            updateSwishEmptyState();
+          });
+
+          const body = document.createElement("pre");
+          body.className = "swish-result-body";
+          body.textContent = output;
+
+          header.append(queryLabel, closeButton);
+          card.append(header, body);
+          swishResultsPanel.prepend(card);
+          updateSwishEmptyState();
+        }
+
         function saveSwishProgram() {
           try {
             localStorage.setItem(swishProgramStorageKey, getSwishProgramText());
-            if (swishReportOutput) {
-              swishReportOutput.textContent = "Program saved locally. Refresh the page and your latest SWISH editor code will still be here.";
-            }
+            setSwishStorageMessage("Program saved locally. Refresh the page and your latest SWISH editor code will still be here.");
           } catch (error) {
             console.warn("Unable to save SWISH program locally:", error);
-            if (swishReportOutput) {
-              swishReportOutput.textContent = "Saving failed in this browser. You can still edit and download the Prolog code.";
-            }
+            setSwishStorageMessage("Saving failed in this browser. You can still edit and download the Prolog code.", true);
           }
         }
 
@@ -2494,6 +2745,7 @@ false`;
           link.click();
           link.remove();
           URL.revokeObjectURL(link.href);
+          setSwishStorageMessage("Downloaded pathwise_final_project_logic.pl");
         }
 
         async function runSwishPrologDemo() {
@@ -2503,12 +2755,12 @@ false`;
             swishQueryInput.value = query;
           }
 
-          if (swishReportOutput) {
-            swishReportOutput.textContent = formatQueryResult(query, extractPersonFromQuery(query));
-          }
+          appendSwishResultCard(query, formatQueryResult(query, extractPersonFromQuery(query)));
+          setSwishStorageMessage("");
         }
 
         loadSavedSwishProgram();
+        updateSwishEmptyState();
 
         if (swishRunBtn) {
           swishRunBtn.addEventListener("click", runSwishPrologDemo);
